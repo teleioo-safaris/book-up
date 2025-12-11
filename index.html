@@ -1,0 +1,3472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.0, user-scalable=no">
+    <title>Wanderlust Planners - Your Dream Vacation Awaits</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1E88E5;
+            --secondary: #43A047;
+            --accent: #FF9800;
+            --highlight: #FFD700;
+            --dark: #1a237e;
+            --light: #f5f7fa;
+            --gray: #666;
+            --success: #2E7D32;
+            --white: #ffffff;
+            --error: #dc3545;
+            --warning: #ffc107;
+            --ocean-blue: #0d47a1;
+            --sand: #FFE0B2;
+        }
+
+        /* Travel Payment Integration Styles */
+        .travel-payment-option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .travel-payment-option:hover {
+            border-color: var(--primary);
+            background: white;
+        }
+
+        .travel-payment-option.active {
+            border-color: var(--primary);
+            background: #e8f5e8;
+        }
+
+        .travel-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .travel-features {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .travel-features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .travel-features li {
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .travel-features i {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+
+        .travel-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .travel-modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .travel-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            z-index: 10;
+        }
+
+        .travel-header {
+            background: linear-gradient(135deg, var(--ocean-blue) 0%, var(--primary) 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .travel-header h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .travel-body {
+            padding: 2rem;
+        }
+
+        .travel-step {
+            display: none;
+        }
+
+        .travel-step.active {
+            display: block;
+        }
+
+        .travel-business-info {
+            background: #e7f3ff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--ocean-blue);
+        }
+
+        .travel-amount-input {
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .travel-amount-input input {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .travel-payment-methods {
+            margin: 1.5rem 0;
+        }
+
+        .travel-method-card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .travel-method-card.active {
+            border-color: var(--ocean-blue);
+            background: #f8f9fa;
+        }
+
+        .travel-method-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.5rem;
+        }
+
+        .travel-method-icon {
+            font-size: 1.2rem;
+            color: var(--ocean-blue);
+        }
+
+        .travel-method-name {
+            font-weight: 600;
+            color: var(--ocean-blue);
+        }
+
+        .travel-details-card {
+            background: var(--ocean-blue);
+            color: white;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .travel-details-text {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .travel-copy-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .travel-copy-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .travel-summary {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .travel-summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .travel-summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .travel-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .travel-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ddd;
+            z-index: 1;
+        }
+
+        .travel-step-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .travel-step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #ddd;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .travel-step-indicator.active .travel-step-number {
+            background: var(--ocean-blue);
+        }
+
+        .travel-step-indicator.completed .travel-step-number {
+            background: var(--primary);
+        }
+
+        .travel-step-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        .travel-step-indicator.active .travel-step-label {
+            color: var(--ocean-blue);
+        }
+
+        .travel-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .travel-btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .travel-btn-primary {
+            background: var(--ocean-blue);
+            color: white;
+        }
+
+        .travel-btn-primary:hover {
+            background: var(--primary);
+        }
+
+        .travel-btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .travel-btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .travel-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .travel-loading {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+
+        .travel-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--ocean-blue);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .travel-success {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .travel-success-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .travel-error {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+
+        .travel-error-icon {
+            font-size: 4rem;
+            color: var(--error);
+            margin-bottom: 1rem;
+        }
+
+        .travel-receipt {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .travel-receipt h4 {
+            color: var(--ocean-blue);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .travel-receipt-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .travel-receipt-item:last-child {
+            border-bottom: none;
+        }
+
+        .travel-receipt-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .travel-receipt-value {
+            color: var(--gray);
+        }
+
+        .travel-offline-notice {
+            background: var(--warning);
+            color: #856404;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Loading States */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Auth Modal Styles */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            padding: 2rem;
+            position: relative;
+            text-align: center;
+        }
+
+        .google-signin-btn {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            color: var(--dark);
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .google-signin-btn:hover {
+            background: #f8f9fa;
+            border-color: #ccc;
+        }
+
+        .google-signin-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .auth-footer {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Simplified User Menu Styles */
+        .user-menu {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 1rem;
+            min-width: 200px;
+            z-index: 1000;
+            margin-top: 0.5rem;
+        }
+
+        .user-dropdown.active {
+            display: block;
+        }
+
+        .user-dropdown-info {
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 0.75rem;
+        }
+
+        .user-dropdown-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .user-dropdown-email {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .logout-btn {
+            background: none;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .logout-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 7px 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: var(--secondary);
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 10;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-suggestion {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s ease;
+        }
+
+        .search-suggestion:hover {
+            background: var(--light);
+        }
+
+        .search-suggestion:last-child {
+            border-bottom: none;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .header-actions a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .bookings, .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .bookings-icon {
+            position: relative;
+        }
+
+        .bookings-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--dark);
+            background: transparent;
+            color: var(--dark);
+        }
+
+        .btn-outline:hover {
+            background: var(--light);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            padding: 2rem;
+            flex-direction: column;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .mobile-nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 50, 0.7), rgba(0, 0, 50, 0.7)), url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-search {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-search input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Trip Types */
+        .trip-types {
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--highlight);
+            border-radius: 2px;
+        }
+
+        .trip-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .trip-type-card {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .trip-type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .trip-type-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Featured Destinations */
+        .featured-destinations {
+            padding: 3rem 2rem;
+            background: var(--light);
+        }
+
+        .destinations-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .destination-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .destination-image {
+            height: 180px;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .destination-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .destination-content {
+            padding: 1.5rem;
+        }
+
+        .destination-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .destination-duration {
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .destination-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .rating-stars {
+            color: var(--highlight);
+        }
+
+        .rating-count {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .destination-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .current-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .original-price {
+            color: var(--gray);
+            text-decoration: line-through;
+        }
+
+        .popular {
+            background: var(--highlight);
+            color: #593d00;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Destination Detail Modal */
+        .destination-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .destination-detail {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-destination {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            z-index: 10;
+            background: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .destination-detail-header {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .destination-detail-content {
+            padding: 2rem;
+        }
+
+        .destination-detail-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .destination-detail-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray);
+        }
+
+        .destination-detail-description {
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .destination-detail-inclusions {
+            margin-bottom: 2rem;
+        }
+
+        .destination-detail-inclusions h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .destination-detail-inclusions ul {
+            padding-left: 1.5rem;
+        }
+
+        .destination-detail-inclusions li {
+            margin-bottom: 0.5rem;
+        }
+
+        .destination-detail-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .destination-detail-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Why Choose Us */
+        .why-choose {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem 1rem;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            color: var(--dark);
+        }
+
+        /* Video Feature */
+        .video-feature {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+
+        /* Bookings Modal */
+        .bookings-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bookings-content {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .close-bookings {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .booking-items {
+            margin: 1.5rem 0;
+        }
+
+        .booking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .booking-item:last-child {
+            border-bottom: none;
+        }
+
+        .booking-item-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .booking-item-price {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .remove-booking {
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .bookings-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 1.5rem 0;
+            padding-top: 1rem;
+            border-top: 2px solid #eee;
+        }
+
+        /* Checkout Form */
+        .checkout-form {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 1001;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-success {
+            background: var(--primary);
+        }
+
+        .toast-error {
+            background: var(--error);
+        }
+
+        .toast-warning {
+            background: var(--warning);
+            color: var(--dark);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .footer-links h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: var(--highlight);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--highlight);
+            text-decoration: underline;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+        }
+
+        /* Date Selection */
+        .date-selection {
+            margin: 1rem 0;
+        }
+
+        .date-inputs {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .date-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .date-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .date-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .travelers-input {
+            margin: 1rem 0;
+        }
+
+        .travelers-input label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .travelers-input input {
+            width: 100%;
+            max-width: 100px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .search-bar {
+                display: none;
+            }
+
+            .header-actions .auth-buttons {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .trip-types-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .destinations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-destinations, .trip-types, .why-choose {
+                padding: 2rem 1rem;
+            }
+
+            .destination-detail-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .destination-detail-actions .btn {
+                width: 100%;
+            }
+
+            .user-avatar {
+                width: 36px;
+                height: 36px;
+            }
+
+            .video-container iframe {
+                height: 250px;
+            }
+
+            .date-inputs {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .trip-types-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-compass logo-img"></i>
+                <span>Wanderlust Planners</span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="#" class="active">Home</a>
+                <a href="destinations.html">Destinations</a>
+                <a href="packages.html">Packages</a>
+                <a href="#">Custom Trips</a>
+                <a href="#">About</a>
+            </nav>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search destinations or activities..." id="search-input">
+                <button id="search-button"><i class="fas fa-search"></i></button>
+                <div class="search-suggestions" id="search-suggestions">
+                    <!-- Search suggestions will be populated here -->
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <div class="bookings">
+                    <a href="#" id="bookings-icon" class="bookings-icon">
+                        <i class="fas fa-suitcase"></i>
+                        <span class="bookings-count" id="bookings-count">0</span>
+                    </a>
+                </div>
+                
+                <!-- Auth Buttons (shown when user is not logged in) -->
+                <div class="auth-buttons" id="auth-buttons">
+                    <button class="btn btn-primary" id="signin-btn">Sign In</button>
+                </div>
+                
+                <!-- User Menu (shown when user is logged in) -->
+                <div class="user-menu" id="user-menu">
+                    <img src="" alt="User Avatar" class="user-avatar" id="user-avatar">
+                    <div class="user-dropdown" id="user-dropdown">
+                        <div class="user-dropdown-info">
+                            <div class="user-dropdown-name" id="user-dropdown-name"></div>
+                            <div class="user-dropdown-email" id="user-dropdown-email"></div>
+                        </div>
+                        <button class="logout-btn" id="logout-btn">Logout</button>
+                    </div>
+                </div>
+                
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header">
+            <a href="#" class="logo">
+                <i class="fas fa-compass logo-img"></i>
+                <span>Wanderlust Planners</span>
+            </a>
+            <button class="close-menu" id="close-menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="mobile-nav-links">
+            <a href="#" class="active">Home</a>
+            <a href="destinations.html">Destinations</a>
+            <a href="packages.html">Packages</a>
+            <a href="#">Custom Trips</a>
+            <a href="#">About</a>
+            <a href="#" id="mobile-signin">Sign In</a>
+        </nav>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="auth-modal">
+        <div class="auth-content">
+            <h2 style="margin-bottom: 1.5rem;">Welcome to Wanderlust Planners</h2>
+            
+            <div id="google-signin-container">
+                <div class="google-signin-btn" id="google-signin-btn">
+                    <i class="fab fa-google"></i>
+                    <span id="google-btn-text">Continue with Google</span>
+                </div>
+            </div>
+            
+            <div class="auth-footer">
+                By signing in, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Travel Payment Modal -->
+    <div class="travel-modal" id="travel-modal">
+        <div class="travel-modal-content">
+            <button class="travel-close" id="travel-close">&times;</button>
+            <div class="travel-header">
+                <h3>Secure Payment</h3>
+                <p>Complete your trip booking safely and securely</p>
+            </div>
+            <div class="travel-body">
+                <div class="travel-steps">
+                    <div class="travel-step-indicator active" id="travel-step-1">
+                        <div class="travel-step-number">1</div>
+                        <div class="travel-step-label">Amount</div>
+                    </div>
+                    <div class="travel-step-indicator" id="travel-step-2">
+                        <div class="travel-step-number">2</div>
+                        <div class="travel-step-label">Payment</div>
+                    </div>
+                    <div class="travel-step-indicator" id="travel-step-3">
+                        <div class="travel-step-number">3</div>
+                        <div class="travel-step-label">Confirm</div>
+                    </div>
+                </div>
+
+                <!-- Step 1: Amount -->
+                <div class="travel-step active" id="travel-amount-step">
+                    <div class="travel-business-info">
+                        <h4>Wanderlust Planners</h4>
+                        <p>Complete your trip booking</p>
+                    </div>
+                    <div class="travel-amount-input">
+                        <input type="number" id="travel-amount" placeholder="0" min="1" value="0" readonly>
+                    </div>
+                    <div style="text-align: center; color: var(--gray); margin-bottom: 1.5rem;">
+                        Amount in Kenyan Shillings (KES)
+                    </div>
+                    <button class="travel-btn travel-btn-primary" id="travel-continue-to-payment">
+                        Continue to Payment <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <!-- Step 2: Payment Method -->
+                <div class="travel-step" id="travel-payment-step">
+                    <div class="travel-business-info">
+                        <h4>Wanderlust Planners</h4>
+                        <p>Choose your payment method</p>
+                    </div>
+                    <div class="travel-payment-methods" id="travel-methods-container">
+                        <!-- Payment methods will be loaded here -->
+                    </div>
+                    <div class="travel-buttons">
+                        <button class="travel-btn travel-btn-secondary" id="travel-back-to-amount">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="travel-btn travel-btn-primary" id="travel-continue-to-confirm">
+                            Continue <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Confirmation -->
+                <div class="travel-step" id="travel-confirm-step">
+                    <div class="travel-business-info">
+                        <h4>Booking Summary</h4>
+                    </div>
+                    <div class="travel-summary">
+                        <div class="travel-summary-item">
+                            <span>Agency:</span>
+                            <span id="travel-summary-business">Wanderlust Planners</span>
+                        </div>
+                        <div class="travel-summary-item">
+                            <span>Amount:</span>
+                            <span id="travel-summary-amount">KES 0</span>
+                        </div>
+                        <div class="travel-summary-item">
+                            <span>Payment Method:</span>
+                            <span id="travel-summary-method">-</span>
+                        </div>
+                    </div>
+                    <div style="margin: 1.5rem 0;">
+                        <label for="travel-transaction-id" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
+                            Transaction Reference Number
+                        </label>
+                        <input type="text" id="travel-transaction-id" placeholder="Enter M-PESA transaction code" 
+                               style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 6px;">
+                        <small style="color: var(--gray); margin-top: 0.5rem; display: block;">
+                            Enter the code you received after making the payment
+                        </small>
+                    </div>
+                    <div class="travel-buttons">
+                        <button class="travel-btn travel-btn-secondary" id="travel-back-to-payment">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="travel-btn travel-btn-primary" id="travel-submit-payment">
+                            <i class="fas fa-paper-plane"></i> Submit Payment
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div class="travel-loading" id="travel-loading">
+                    <div class="travel-spinner"></div>
+                    <div>Processing your booking...</div>
+                </div>
+
+                <!-- Success State -->
+                <div class="travel-success" id="travel-success" style="display: none;">
+                    <div class="travel-success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Booking Confirmed Successfully!</h3>
+                    <p id="travel-success-message">Your trip has been booked and confirmation has been sent to your email.</p>
+                    
+                    <!-- Receipt Details -->
+                    <div class="travel-receipt" id="travel-receipt">
+                        <h4>Booking Confirmation</h4>
+                        <div class="travel-receipt-item">
+                            <span class="travel-receipt-label">Confirmation ID:</span>
+                            <span class="travel-receipt-value" id="receipt-id"></span>
+                        </div>
+                        <div class="travel-receipt-item">
+                            <span class="travel-receipt-label">Agency:</span>
+                            <span class="travel-receipt-value" id="receipt-business"></span>
+                        </div>
+                        <div class="travel-receipt-item">
+                            <span class="travel-receipt-label">Amount:</span>
+                            <span class="travel-receipt-value" id="receipt-amount"></span>
+                        </div>
+                        <div class="travel-receipt-item">
+                            <span class="travel-receipt-label">Payment Method:</span>
+                            <span class="travel-receipt-value" id="receipt-method"></span>
+                        </div>
+                        <div class="travel-receipt-item">
+                            <span class="travel-receipt-label">Date:</span>
+                            <span class="travel-receipt-value" id="receipt-date"></span>
+                        </div>
+                        <div class="travel-receipt-item">
+                            <span class="travel-receipt-label">Trips:</span>
+                            <span class="travel-receipt-value" id="receipt-trips"></span>
+                        </div>
+                    </div>
+                    
+                    <button class="travel-btn travel-btn-primary" id="travel-success-close">
+                        Continue Exploring
+                    </button>
+                </div>
+
+                <!-- Error State -->
+                <div class="travel-error" id="travel-error">
+                    <div class="travel-error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Booking Processing Failed</h3>
+                    <p id="travel-error-message">There was an error processing your booking. Please try again.</p>
+                    <div class="travel-offline-notice" id="travel-offline-notice" style="display: none;">
+                        <i class="fas fa-wifi"></i> You are currently offline. Your booking has been saved and will be processed when you're back online.
+                    </div>
+                    <div class="travel-buttons">
+                        <button class="travel-btn travel-btn-secondary" id="travel-error-retry">
+                            <i class="fas fa-redo"></i> Try Again
+                        </button>
+                        <button class="travel-btn travel-btn-primary" id="travel-error-close">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Your Dream Vacation Awaits</h1>
+            <p>Let us plan your perfect getaway with personalized travel experiences and expert guidance.</p>
+            <div class="hero-search">
+                <input type="text" placeholder="Where do you want to go?" id="hero-search-input">
+            </div>
+        </div>
+    </section>
+
+    <!-- Trip Types -->
+    <section class="trip-types">
+        <h2 class="section-title">Types of Travel Experiences</h2>
+        <div class="trip-types-grid">
+            <div class="trip-type-card">
+                <div class="trip-type-icon">
+                    <i class="fas fa-umbrella-beach"></i>
+                </div>
+                <h3>Beach Getaways</h3>
+            </div>
+            <div class="trip-type-card">
+                <div class="trip-type-icon">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <h3>Mountain Adventures</h3>
+            </div>
+            <div class="trip-type-card">
+                <div class="trip-type-icon">
+                    <i class="fas fa-city"></i>
+                </div>
+                <h3>City Breaks</h3>
+            </div>
+            <div class="trip-type-card">
+                <div class="trip-type-icon">
+                    <i class="fas fa-hiking"></i>
+                </div>
+                <h3>Adventure Tours</h3>
+            </div>
+            <div class="trip-type-card">
+                <div class="trip-type-icon">
+                    <i class="fas fa-ring"></i>
+                </div>
+                <h3>Honeymoon Packages</h3>
+            </div>
+            <div class="trip-type-card">
+                <div class="trip-type-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Family Vacations</h3>
+            </div>
+            <div class="trip-type-card">
+                <div class="trip-type-icon">
+                    <i class="fas fa-globe-africa"></i>
+                </div>
+                <h3>Safari Tours</h3>
+            </div>
+            <div class="trip-type-card">
+                <div class="trip-type-icon">
+                    <i class="fas fa-ship"></i>
+                </div>
+                <h3>Cruise Packages</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Destinations -->
+    <section class="featured-destinations">
+        <div class="destinations-container">
+            <h2 class="section-title">Featured Destinations</h2>
+            <div class="destinations-grid">
+                <div class="destination-card" data-destination="maasai-mara">
+                    <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                        <div class="destination-badge">Popular</div>
+                    </div>
+                    <div class="destination-content">
+                        <h3 class="destination-title">Maasai Mara Safari</h3>
+                        <p class="destination-duration"><i class="far fa-clock"></i> 5 days, 4 nights</p>
+                        <div class="destination-rating">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="destination-price">
+                            <span class="current-price">$1,299</span>
+                            <span class="original-price">$1,599</span>
+                            <span class="popular">Popular</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="destination-card" data-destination="diani-beach">
+                    <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                        <div class="destination-badge">Best Value</div>
+                    </div>
+                    <div class="destination-content">
+                        <h3 class="destination-title">Diani Beach Resort</h3>
+                        <p class="destination-duration"><i class="far fa-clock"></i> 7 days, 6 nights</p>
+                        <div class="destination-rating">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="destination-price">
+                            <span class="current-price">$899</span>
+                            <span class="original-price">$1,199</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="destination-card" data-destination="amboseli">
+                    <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1505765050516-f72dcacb0680?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                        <div class="destination-badge">New</div>
+                    </div>
+                    <div class="destination-content">
+                        <h3 class="destination-title">Amboseli & Kilimanjaro</h3>
+                        <p class="destination-duration"><i class="far fa-clock"></i> 4 days, 3 nights</p>
+                        <div class="destination-rating">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="destination-price">
+                            <span class="current-price">$749</span>
+                            <span class="original-price">$899</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="destination-card" data-destination="zanzibar">
+                    <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1562184552-a3e1ad6c7b65?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                        <div class="destination-badge">Popular</div>
+                    </div>
+                    <div class="destination-content">
+                        <h3 class="destination-title">Zanzibar Island Escape</h3>
+                        <p class="destination-duration"><i class="far fa-clock"></i> 6 days, 5 nights</p>
+                        <div class="destination-rating">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="destination-price">
+                            <span class="current-price">$1,199</span>
+                            <span class="original-price">$1,499</span>
+                            <span class="popular">Popular</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="destination-card" data-destination="naivasha">
+                    <div class="destination-image" style="background-image: url('https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');">
+                        <div class="destination-badge">Family Friendly</div>
+                    </div>
+                    <div class="destination-content">
+                        <h3 class="destination-title">Lake Naivasha Retreat</h3>
+                        <p class="destination-duration"><i class="far fa-clock"></i> 3 days, 2 nights</p>
+                        <div class="destination-rating">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="destination-price">
+                            <span class="current-price">$399</span>
+                            <span class="original-price">$549</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose">
+        <h2 class="section-title">Why Choose Wanderlust Planners?</h2>
+        <div class="features-grid">
+            <div class="video-feature">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/BHACKCNDMW8" 
+                            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+                <h3 style="margin-top: 1.5rem;">See Why Travelers Love Us</h3>
+                <p>Watch this video to hear from our happy travelers and see how Wanderlust Planners has transformed their vacation experiences.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h3>Personalized Itineraries</h3>
+                <p>Custom travel plans designed specifically for your preferences and budget</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Travel Protection</h3>
+                <p>24/7 support and comprehensive travel insurance options for peace of mind</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Local Expertise</h3>
+                <p>Insider knowledge from our network of local guides and partners</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h3>Best Price Guarantee</h3>
+                <p>We match any lower price you find for the same travel package</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">Wanderlust Planners</div>
+                <p>Creating unforgettable travel experiences since 2010. Your dream vacation is our passion.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Travel Partners</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Destinations</h4>
+                <ul>
+                    <li><a href="#">Africa</a></li>
+                    <li><a href="#">Europe</a></li>
+                    <li><a href="#">Asia</a></li>
+                    <li><a href="#">Americas</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Wanderlust Planners. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Destination Detail Modal -->
+    <div class="destination-modal" id="destination-modal">
+        <div class="destination-detail">
+            <span class="close-destination" id="close-destination">&times;</span>
+            <div class="destination-detail-header" id="destination-detail-header">
+                <!-- Destination image will be set via JS -->
+            </div>
+            <div class="destination-detail-content">
+                <h2 class="destination-detail-title" id="destination-detail-title">Destination Title</h2>
+                <div class="destination-detail-meta">
+                    <div class="meta-item">
+                        <i class="far fa-clock"></i>
+                        <span id="destination-detail-duration">Duration</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-star"></i>
+                        <span id="destination-detail-rating">Rating</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-users"></i>
+                        <span id="destination-detail-travelers">Travelers</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="destination-detail-location">Location</span>
+                    </div>
+                </div>
+                <div class="destination-detail-description" id="destination-detail-description">
+                    <!-- Destination description will be set via JS -->
+                </div>
+                <div class="date-selection">
+                    <div class="date-inputs">
+                        <div class="date-group">
+                            <label for="departure-date">Departure Date</label>
+                            <input type="date" id="departure-date" min="">
+                        </div>
+                        <div class="date-group">
+                            <label for="return-date">Return Date</label>
+                            <input type="date" id="return-date">
+                        </div>
+                    </div>
+                    <div class="travelers-input">
+                        <label for="travelers-count">Number of Travelers</label>
+                        <input type="number" id="travelers-count" min="1" max="10" value="1">
+                    </div>
+                </div>
+                <div class="destination-detail-inclusions">
+                    <h3>What's Included</h3>
+                    <ul id="destination-detail-inclusions">
+                        <!-- Destination inclusions will be set via JS -->
+                    </ul>
+                </div>
+                <div class="destination-detail-actions">
+                    <div>
+                        <span class="destination-detail-price" id="destination-detail-price">$0.00</span>
+                        <span class="original-price" id="destination-detail-original-price">$0.00</span>
+                    </div>
+                    <button class="btn btn-primary" id="add-to-bookings-btn">Add to My Bookings</button>
+                    <!-- Travel Payment Option -->
+                    <div class="travel-payment-option" id="travel-payment-option">
+                        <div class="travel-logo">
+                            <i class="fas fa-plane"></i>
+                            <span>Book Now & Pay</span>
+                        </div>
+                        <div class="travel-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> Secure payment processing</li>
+                                <li><i class="fas fa-check"></i> Instant booking confirmation</li>
+                                <li><i class="fas fa-check"></i> Flexible payment options</li>
+                                <li><i class="fas fa-check"></i> 24/7 customer support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bookings Modal -->
+    <div class="bookings-modal" id="bookings-modal">
+        <div class="bookings-content">
+            <span class="close-bookings" id="close-bookings">&times;</span>
+            <h2>My Trip Bookings</h2>
+            <div class="booking-items" id="booking-items">
+                <!-- Booking items will be added here dynamically -->
+            </div>
+            <div class="bookings-total">
+                <span>Total:</span>
+                <span id="bookings-total">$0.00</span>
+            </div>
+            <div class="checkout-form" id="checkout-form">
+                <!-- Travel Payment Option in Bookings -->
+                <div class="travel-payment-option" id="travel-bookings-option">
+                    <div class="travel-logo">
+                        <i class="fas fa-plane"></i>
+                        <span>Book Now & Pay</span>
+                    </div>
+                    <div class="travel-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Secure payment processing</li>
+                            <li><i class="fas fa-check"></i> Instant booking confirmation</li>
+                            <li><i class="fas fa-check"></i> Flexible payment options</li>
+                            <li><i class="fas fa-check"></i> 24/7 customer support</li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="btn btn-whatsapp" id="whatsapp-checkout">
+                    <i class="fab fa-whatsapp"></i> Complete Booking via WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Trip added to bookings!</span>
+    </div>
+
+    <script>
+        // Travel Payment Configuration
+        const TRAVEL_CONFIG = {
+            business: {
+                name: "Wanderlust Planners",
+                email: "bookings@wanderlustplanners.com",
+                sheetName: "Travel Bookings",
+                paymentMethods: [
+                    {
+                        type: 'mpesa-till',
+                        name: 'Lipa Na M-PESA',
+                        details: '9876543',
+                        description: 'Till Number'
+                    },
+                    {
+                        type: 'card',
+                        name: 'Credit/Debit Card',
+                        details: 'Visa/Mastercard',
+                        description: 'Online Payment'
+                    }
+                ]
+            },
+            scriptUrl: 'https://script.google.com/macros/s/AKfycbycDPMAhgMwuuchAlTMT0hGGgIMpcUejdeapcSAVk9raWITFJpLKdQaxbociiS3a16CAg/exec',
+            receiptConfig: {
+                sendEmail: true,
+                includeTripDetails: true,
+                autoGenerateReceipt: true
+            }
+        };
+
+        // Travel State
+        let travelCurrentStep = 1;
+        let travelSelectedMethod = '';
+        let travelCurrentAmount = 0;
+        let travelCurrentReceipt = null;
+        let pendingBookings = [];
+
+        // Travel DOM Elements
+        const travelModal = document.getElementById('travel-modal');
+        const travelClose = document.getElementById('travel-close');
+        const travelAmountStep = document.getElementById('travel-amount-step');
+        const travelPaymentStep = document.getElementById('travel-payment-step');
+        const travelConfirmStep = document.getElementById('travel-confirm-step');
+        const travelLoading = document.getElementById('travel-loading');
+        const travelSuccess = document.getElementById('travel-success');
+        const travelError = document.getElementById('travel-error');
+        const travelAmountInput = document.getElementById('travel-amount');
+        const travelMethodsContainer = document.getElementById('travel-methods-container');
+        const travelSummaryBusiness = document.getElementById('travel-summary-business');
+        const travelSummaryAmount = document.getElementById('travel-summary-amount');
+        const travelSummaryMethod = document.getElementById('travel-summary-method');
+        const travelTransactionId = document.getElementById('travel-transaction-id');
+        const travelOfflineNotice = document.getElementById('travel-offline-notice');
+
+        // Travel Receipt Elements
+        const travelReceiptId = document.getElementById('receipt-id');
+        const travelReceiptBusiness = document.getElementById('receipt-business');
+        const travelReceiptAmount = document.getElementById('receipt-amount');
+        const travelReceiptMethod = document.getElementById('receipt-method');
+        const travelReceiptDate = document.getElementById('receipt-date');
+        const travelReceiptTrips = document.getElementById('receipt-trips');
+
+        // Travel Buttons
+        const travelContinueToPayment = document.getElementById('travel-continue-to-payment');
+        const travelBackToAmount = document.getElementById('travel-back-to-amount');
+        const travelContinueToConfirm = document.getElementById('travel-continue-to-confirm');
+        const travelBackToPayment = document.getElementById('travel-back-to-payment');
+        const travelSubmitPayment = document.getElementById('travel-submit-payment');
+        const travelSuccessClose = document.getElementById('travel-success-close');
+        const travelErrorRetry = document.getElementById('travel-error-retry');
+        const travelErrorClose = document.getElementById('travel-error-close');
+
+        // Travel Step Indicators
+        const travelStep1 = document.getElementById('travel-step-1');
+        const travelStep2 = document.getElementById('travel-step-2');
+        const travelStep3 = document.getElementById('travel-step-3');
+
+        // Travel Payment Options
+        const travelPaymentOption = document.getElementById('travel-payment-option');
+        const travelBookingsOption = document.getElementById('travel-bookings-option');
+
+        // Destination data with detailed information
+        const destinations = {
+            'maasai-mara': {
+                title: 'Maasai Mara Safari Adventure',
+                price: 1299,
+                originalPrice: 1599,
+                duration: '5 days, 4 nights',
+                travelers: '2,500+ travelers',
+                location: 'Kenya',
+                image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                description: 'Experience the magic of the African savannah with our premium Maasai Mara safari package. Witness the Great Migration, spot the Big Five, and immerse yourself in Maasai culture.',
+                inclusions: [
+                    'Luxury tented accommodation',
+                    'Daily game drives with expert guides',
+                    'All meals and beverages',
+                    'Cultural visit to Maasai village',
+                    'Airport transfers',
+                    'Park entry fees',
+                    '24/7 safari support'
+                ]
+            },
+            'diani-beach': {
+                title: 'Diani Beach Resort Getaway',
+                price: 899,
+                originalPrice: 1199,
+                duration: '7 days, 6 nights',
+                travelers: '3,200+ travelers',
+                location: 'Kenyan Coast',
+                image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                description: 'Relax on pristine white sand beaches and enjoy world-class resort amenities. Perfect for couples, families, and solo travelers seeking sun, sea, and relaxation.',
+                inclusions: [
+                    'Beachfront resort accommodation',
+                    'All-inclusive meals and drinks',
+                    'Water sports equipment rental',
+                    'Spa treatment voucher',
+                    'Snorkeling tour',
+                    'Airport transfers',
+                    'Daily entertainment'
+                ]
+            },
+            'amboseli': {
+                title: 'Amboseli & Kilimanjaro Views',
+                price: 749,
+                originalPrice: 899,
+                duration: '4 days, 3 nights',
+                travelers: '1,800+ travelers',
+                location: 'Kenya',
+                image: 'https://images.unsplash.com/photo-1505765050516-f72dcacb0680?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                description: 'Marvel at majestic Mount Kilimanjaro while observing elephants and other wildlife in their natural habitat at Amboseli National Park.',
+                inclusions: [
+                    'Lodge accommodation with mountain views',
+                    'Guided game drives',
+                    'All meals',
+                    'Elephant observation experience',
+                    'Nature walks',
+                    'Park fees',
+                    'Transportation'
+                ]
+            },
+            'zanzibar': {
+                title: 'Zanzibar Island Paradise',
+                price: 1199,
+                originalPrice: 1499,
+                duration: '6 days, 5 nights',
+                travelers: '2,900+ travelers',
+                location: 'Tanzania',
+                image: 'https://images.unsplash.com/photo-1562184552-a3e1ad6c7b65?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                description: 'Discover the spice island of Zanzibar with its rich history, beautiful beaches, and vibrant culture. Perfect for history buffs and beach lovers alike.',
+                inclusions: [
+                    'Beach resort accommodation',
+                    'Stone Town cultural tour',
+                    'Spice farm visit',
+                    'All meals',
+                    'Snorkeling at Mnemba Atoll',
+                    'Domestic flights',
+                    'Historical guide services'
+                ]
+            },
+            'naivasha': {
+                title: 'Lake Naivasha Family Retreat',
+                price: 399,
+                originalPrice: 549,
+                duration: '3 days, 2 nights',
+                travelers: '1,500+ travelers',
+                location: 'Kenya',
+                image: 'https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                description: 'Perfect family getaway with activities for all ages. Enjoy boat rides, nature walks, and wildlife viewing in a serene lakeside setting.',
+                inclusions: [
+                    'Family cottage accommodation',
+                    'Boat ride to Crescent Island',
+                    'All meals',
+                    'Guided nature walk',
+                    'Children\'s activity program',
+                    'Park entry fees',
+                    'Transportation from Nairobi'
+                ]
+            }
+        };
+
+        // All available destinations for search
+        const allDestinations = [
+            'Maasai Mara Safari',
+            'Diani Beach Resort',
+            'Amboseli National Park',
+            'Zanzibar Island',
+            'Lake Naivasha',
+            'Mount Kenya Trek',
+            'Samburu National Reserve',
+            'Lamu Island',
+            'Tsavo National Park',
+            'Lake Nakuru',
+            'Mombasa Beach',
+            'Nairobi City Tour',
+            'Hell\'s Gate National Park',
+            'Mount Kilimanjaro Climb',
+            'Victoria Falls Tour'
+        ];
+
+        // Bookings functionality
+        let bookings = [];
+        let currentUser = null;
+        let googleInitialized = false;
+
+        // DOM Elements
+        const bookingsModal = document.getElementById('bookings-modal');
+        const bookingsIcon = document.getElementById('bookings-icon');
+        const bookingsCount = document.getElementById('bookings-count');
+        const closeBookings = document.getElementById('close-bookings');
+        const bookingItems = document.getElementById('booking-items');
+        const bookingsTotal = document.getElementById('bookings-total');
+        const whatsappCheckout = document.getElementById('whatsapp-checkout');
+
+        // Destination modal elements
+        const destinationModal = document.getElementById('destination-modal');
+        const closeDestination = document.getElementById('close-destination');
+        const destinationDetailHeader = document.getElementById('destination-detail-header');
+        const destinationDetailTitle = document.getElementById('destination-detail-title');
+        const destinationDetailDuration = document.getElementById('destination-detail-duration');
+        const destinationDetailTravelers = document.getElementById('destination-detail-travelers');
+        const destinationDetailLocation = document.getElementById('destination-detail-location');
+        const destinationDetailDescription = document.getElementById('destination-detail-description');
+        const destinationDetailInclusions = document.getElementById('destination-detail-inclusions');
+        const destinationDetailPrice = document.getElementById('destination-detail-price');
+        const destinationDetailOriginalPrice = document.getElementById('destination-detail-original-price');
+        const addToBookingsBtn = document.getElementById('add-to-bookings-btn');
+        const departureDateInput = document.getElementById('departure-date');
+        const returnDateInput = document.getElementById('return-date');
+        const travelersCountInput = document.getElementById('travelers-count');
+
+        // Search elements
+        const searchInput = document.getElementById('search-input');
+        const heroSearchInput = document.getElementById('hero-search-input');
+        const searchButton = document.getElementById('search-button');
+        const searchSuggestions = document.getElementById('search-suggestions');
+
+        // Mobile menu elements
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenu = document.getElementById('close-menu');
+
+        // Auth elements
+        const authModal = document.getElementById('auth-modal');
+        const signinBtn = document.getElementById('signin-btn');
+        const authButtons = document.getElementById('auth-buttons');
+        const userMenu = document.getElementById('user-menu');
+        const userAvatar = document.getElementById('user-avatar');
+        const userDropdown = document.getElementById('user-dropdown');
+        const userDropdownName = document.getElementById('user-dropdown-name');
+        const userDropdownEmail = document.getElementById('user-dropdown-email');
+        const logoutBtn = document.getElementById('logout-btn');
+        const googleSigninBtn = document.getElementById('google-signin-btn');
+        const googleBtnText = document.getElementById('google-btn-text');
+        const mobileSignin = document.getElementById('mobile-signin');
+
+        // Toast notification
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+
+        // Current destination being viewed
+        let currentDestinationId = null;
+
+        // Set min date for departure to today
+        const today = new Date().toISOString().split('T')[0];
+        departureDateInput.min = today;
+
+        // Initialize Travel Payment System
+        function initializeTravelPayment() {
+            // Set up event listeners for travel payment options
+            travelPaymentOption.addEventListener('click', function() {
+                if (!currentUser) {
+                    showToast('Please sign in to book trips.');
+                    authModal.style.display = 'flex';
+                    return;
+                }
+                openTravelModal();
+            });
+
+            travelBookingsOption.addEventListener('click', function() {
+                if (!currentUser) {
+                    showToast('Please sign in to book trips.');
+                    authModal.style.display = 'flex';
+                    return;
+                }
+                if (bookings.length === 0) {
+                    showToast('Your bookings are empty. Please add trips before booking.');
+                    return;
+                }
+                openTravelModal();
+            });
+
+            // Travel Modal Controls
+            travelClose.addEventListener('click', closeTravelModal);
+            travelSuccessClose.addEventListener('click', closeTravelModal);
+            travelErrorClose.addEventListener('click', closeTravelModal);
+            travelErrorRetry.addEventListener('click', function() {
+                travelError.style.display = 'none';
+                travelConfirmStep.style.display = 'block';
+            });
+
+            // Travel Step Navigation
+            travelContinueToPayment.addEventListener('click', goToTravelStep2);
+            travelBackToAmount.addEventListener('click', goToTravelStep1);
+            travelContinueToConfirm.addEventListener('click', goToTravelStep3);
+            travelBackToPayment.addEventListener('click', goToTravelStep2);
+            travelSubmitPayment.addEventListener('click', processTravelPayment);
+
+            // Close modal when clicking outside
+            travelModal.addEventListener('click', function(e) {
+                if (e.target === travelModal) {
+                    closeTravelModal();
+                }
+            });
+
+            // Check for pending bookings on load
+            checkPendingBookings();
+        }
+
+        // Open Travel Modal
+        function openTravelModal() {
+            // Calculate total amount from bookings
+            if (bookings.length > 0) {
+                travelCurrentAmount = bookings.reduce((total, item) => total + (item.price * item.travelers), 0);
+            } else if (currentDestinationId && destinations[currentDestinationId]) {
+                const travelers = parseInt(travelersCountInput.value) || 1;
+                travelCurrentAmount = destinations[currentDestinationId].price * travelers;
+            }
+            
+            // Convert USD to KES (approximate conversion)
+            travelCurrentAmount = Math.round(travelCurrentAmount * 130); // 1 USD = 130 KES
+            
+            travelAmountInput.value = travelCurrentAmount;
+            travelModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            resetTravelFlow();
+        }
+
+        // Close Travel Modal
+        function closeTravelModal() {
+            travelModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            resetTravelFlow();
+        }
+
+        // Reset Travel flow
+        function resetTravelFlow() {
+            travelCurrentStep = 1;
+            travelSelectedMethod = '';
+            travelTransactionId.value = '';
+            travelCurrentReceipt = null;
+            updateTravelSteps();
+        }
+
+        // Update Travel steps
+        function updateTravelSteps() {
+            // Hide all steps
+            travelAmountStep.style.display = 'none';
+            travelPaymentStep.style.display = 'none';
+            travelConfirmStep.style.display = 'none';
+            travelLoading.style.display = 'none';
+            travelSuccess.style.display = 'none';
+            travelError.style.display = 'none';
+
+            // Show current step
+            if (travelCurrentStep === 1) {
+                travelAmountStep.style.display = 'block';
+            } else if (travelCurrentStep === 2) {
+                travelPaymentStep.style.display = 'block';
+                loadTravelPaymentMethods();
+            } else if (travelCurrentStep === 3) {
+                travelConfirmStep.style.display = 'block';
+                updateTravelSummary();
+            }
+
+            // Update step indicators
+            travelStep1.className = 'travel-step-indicator';
+            travelStep2.className = 'travel-step-indicator';
+            travelStep3.className = 'travel-step-indicator';
+
+            if (travelCurrentStep >= 1) travelStep1.classList.add('active');
+            if (travelCurrentStep >= 2) travelStep2.classList.add('active');
+            if (travelCurrentStep >= 3) travelStep3.classList.add('active');
+
+            if (travelCurrentStep > 1) travelStep1.classList.add('completed');
+            if (travelCurrentStep > 2) travelStep2.classList.add('completed');
+        }
+
+        // Travel Step Navigation
+        function goToTravelStep1() {
+            travelCurrentStep = 1;
+            updateTravelSteps();
+        }
+
+        function goToTravelStep2() {
+            if (travelCurrentAmount < 1) {
+                showToast('Please enter a valid amount');
+                return;
+            }
+            travelCurrentStep = 2;
+            updateTravelSteps();
+        }
+
+        function goToTravelStep3() {
+            if (!travelSelectedMethod) {
+                showToast('Please select a payment method');
+                return;
+            }
+            travelCurrentStep = 3;
+            updateTravelSteps();
+        }
+
+        // Load Travel payment methods
+        function loadTravelPaymentMethods() {
+            travelMethodsContainer.innerHTML = '';
+            
+            TRAVEL_CONFIG.business.paymentMethods.forEach((method, index) => {
+                const isActive = index === 0 && !travelSelectedMethod;
+                if (isActive) travelSelectedMethod = method.type;
+                
+                const methodCard = document.createElement('div');
+                methodCard.className = `travel-method-card ${travelSelectedMethod === method.type ? 'active' : ''}`;
+                methodCard.innerHTML = `
+                    <div class="travel-method-header">
+                        <div class="travel-method-icon">
+                            <i class="${getTravelMethodIcon(method.type)}"></i>
+                        </div>
+                        <div class="travel-method-name">${method.name}</div>
+                    </div>
+                    <div class="travel-details-card">
+                        <div class="travel-details-text">${method.description}: ${method.details}</div>
+                        <button class="travel-copy-btn" onclick="copyToClipboard('${method.details}')">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                `;
+                
+                methodCard.addEventListener('click', function() {
+                    travelSelectedMethod = method.type;
+                    document.querySelectorAll('.travel-method-card').forEach(card => {
+                        card.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+                
+                travelMethodsContainer.appendChild(methodCard);
+            });
+        }
+
+        // Get Travel method icon
+        function getTravelMethodIcon(methodType) {
+            const icons = {
+                'mpesa-till': 'fas fa-mobile-alt',
+                'mpesa-send': 'fas fa-paper-plane',
+                'card': 'far fa-credit-card',
+                'paypal': 'fab fa-paypal'
+            };
+            return icons[methodType] || 'fas fa-money-bill-wave';
+        }
+
+        // Update Travel summary
+        function updateTravelSummary() {
+            travelSummaryBusiness.textContent = TRAVEL_CONFIG.business.name;
+            travelSummaryAmount.textContent = `KES ${travelCurrentAmount}`;
+            
+            const method = TRAVEL_CONFIG.business.paymentMethods.find(m => m.type === travelSelectedMethod);
+            travelSummaryMethod.textContent = method ? method.name : travelSelectedMethod;
+        }
+
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                showToast('Copied to clipboard!');
+            }).catch(function() {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast('Copied to clipboard!');
+            });
+        }
+
+        // Process Travel Payment
+        async function processTravelPayment() {
+            const transactionId = travelTransactionId.value.trim();
+            
+            if (!transactionId) {
+                showToast('Please enter your transaction reference number');
+                return;
+            }
+
+            // Show loading
+            travelConfirmStep.style.display = 'none';
+            travelLoading.style.display = 'block';
+
+            // Generate unique confirmation ID
+            const confirmationId = 'WL-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            
+            // Get trip details for receipt
+            const tripDetails = getTripDetailsForReceipt();
+            
+            const formData = {
+                timestamp: new Date().toLocaleString('en-KE'),
+                customerName: currentUser.name,
+                customerEmail: currentUser.email,
+                businessName: TRAVEL_CONFIG.business.name,
+                businessEmail: TRAVEL_CONFIG.business.email,
+                sheetName: TRAVEL_CONFIG.business.sheetName,
+                category: 'travel_booking',
+                amount: travelCurrentAmount,
+                paymentMethod: getTravelMethodName(travelSelectedMethod),
+                transactionId: transactionId,
+                notes: `Trips: ${tripDetails.names}`,
+                status: 'pending_verification',
+                userId: currentUser.id,
+                confirmationId: confirmationId,
+                tripDetails: tripDetails.details,
+                totalTrips: tripDetails.count,
+                receiptConfig: TRAVEL_CONFIG.receiptConfig
+            };
+
+            try {
+                const response = await fetch(TRAVEL_CONFIG.scriptUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Booking successfully recorded
+                    saveTravelTransaction(formData, false);
+                    generateTravelReceipt(formData, tripDetails);
+                    
+                    // Show success
+                    travelLoading.style.display = 'none';
+                    travelSuccess.style.display = 'block';
+                    
+                    // Clear bookings if payment was for booking items
+                    if (bookings.length > 0) {
+                        bookings = [];
+                        updateBookings();
+                    }
+                    
+                    showToast('Booking submitted successfully! Confirmation sent to your email.');
+                } else {
+                    throw new Error(result.message || 'Booking processing failed');
+                }
+                
+            } catch (error) {
+                console.error('Error processing booking:', error);
+                
+                if (!navigator.onLine) {
+                    // Save as pending booking for when we're back online
+                    savePendingBooking(formData);
+                    saveTravelTransaction(formData, true);
+                    generateTravelReceipt(formData, tripDetails);
+                    
+                    travelLoading.style.display = 'none';
+                    travelSuccess.style.display = 'block';
+                    document.getElementById('travel-success-message').textContent = 
+                        'Booking saved offline. It will be processed when you are back online.';
+                    
+                    showToast('Booking saved offline. Will process when online.', 'warning');
+                } else {
+                    travelLoading.style.display = 'none';
+                    travelError.style.display = 'block';
+                    document.getElementById('travel-error-message').textContent = 
+                        'There was an error processing your booking. Please try again.';
+                    
+                    showToast('Booking processing failed. Please try again.', 'error');
+                }
+            }
+        }
+
+        // Save pending booking
+        function savePendingBooking(formData) {
+            const pendingKey = `travel_pending_${currentUser.id}`;
+            let pending = JSON.parse(localStorage.getItem(pendingKey) || '[]');
+            pending.push({
+                ...formData,
+                retryCount: 0,
+                lastRetry: new Date().toISOString()
+            });
+            localStorage.setItem(pendingKey, JSON.stringify(pending));
+        }
+
+        // Check and retry pending bookings
+        async function checkPendingBookings() {
+            if (!currentUser || !navigator.onLine) return;
+            
+            const pendingKey = `travel_pending_${currentUser.id}`;
+            let pending = JSON.parse(localStorage.getItem(pendingKey) || '[]');
+            
+            if (pending.length === 0) return;
+            
+            const successfulBookings = [];
+            
+            for (const booking of pending) {
+                try {
+                    const response = await fetch(TRAVEL_CONFIG.scriptUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(booking)
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success) {
+                            successfulBookings.push(booking);
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Failed to process pending booking: ${booking.confirmationId}`, error);
+                }
+            }
+            
+            if (successfulBookings.length > 0) {
+                pending = pending.filter(b => !successfulBookings.some(sb => sb.confirmationId === b.confirmationId));
+                localStorage.setItem(pendingKey, JSON.stringify(pending));
+            }
+        }
+
+        // Generate receipt details
+        function generateTravelReceipt(formData, tripDetails) {
+            document.getElementById('receipt-id').textContent = formData.confirmationId;
+            document.getElementById('receipt-business').textContent = formData.businessName;
+            document.getElementById('receipt-amount').textContent = `KES ${formData.amount}`;
+            document.getElementById('receipt-method').textContent = formData.paymentMethod;
+            document.getElementById('receipt-date').textContent = formData.timestamp;
+            document.getElementById('receipt-trips').textContent = tripDetails.names;
+            
+            travelCurrentReceipt = {
+                id: formData.confirmationId,
+                business: formData.businessName,
+                amount: formData.amount,
+                method: formData.paymentMethod,
+                date: formData.timestamp,
+                trips: tripDetails.names,
+                customer: currentUser.name,
+                email: currentUser.email
+            };
+        }
+
+        // Get trip details for receipt
+        function getTripDetailsForReceipt() {
+            if (bookings.length > 0) {
+                const names = bookings.map(item => item.title).join(', ');
+                const details = bookings.map(item => ({
+                    title: item.title,
+                    price: item.price,
+                    travelers: item.travelers,
+                    total: item.price * item.travelers
+                }));
+                return {
+                    names: names,
+                    details: details,
+                    count: bookings.length
+                };
+            } else if (currentDestinationId && destinations[currentDestinationId]) {
+                const travelers = parseInt(travelersCountInput.value) || 1;
+                return {
+                    names: destinations[currentDestinationId].title,
+                    details: [{
+                        title: destinations[currentDestinationId].title,
+                        price: destinations[currentDestinationId].price,
+                        travelers: travelers,
+                        total: destinations[currentDestinationId].price * travelers
+                    }],
+                    count: 1
+                };
+            }
+            return {
+                names: 'Trip Booking',
+                details: [],
+                count: 0
+            };
+        }
+
+        // Get Travel method name
+        function getTravelMethodName(methodType) {
+            const method = TRAVEL_CONFIG.business.paymentMethods.find(m => m.type === methodType);
+            return method ? method.name : methodType;
+        }
+
+        // Save Travel transaction
+        function saveTravelTransaction(formData, isOffline = false) {
+            const userTransactionsKey = `travel_transactions_${currentUser.id}`;
+            let bookings = JSON.parse(localStorage.getItem(userTransactionsKey) || '[]');
+            
+            const bookingRecord = {
+                ...formData,
+                offline: isOffline,
+                processed: !isOffline,
+                timestamp: new Date().toISOString(),
+                id: Date.now().toString()
+            };
+            
+            bookings.push(bookingRecord);
+            localStorage.setItem(userTransactionsKey, JSON.stringify(bookings));
+        }
+
+        // Replace with your actual Google Client ID
+        const GOOGLE_CLIENT_ID = '230366555128-bkm4jhc3c14scafm8808uk8u456u6cfk.apps.googleusercontent.com';
+
+        // Initialize Google Sign-In
+        function initializeGoogleSignIn() {
+            if (typeof google === 'undefined') {
+                setTimeout(initializeGoogleSignIn, 500);
+                return;
+            }
+
+            try {
+                google.accounts.id.initialize({
+                    client_id: GOOGLE_CLIENT_ID,
+                    callback: handleGoogleSignIn,
+                    error_callback: handleGoogleSignInError,
+                    ux_mode: 'popup',
+                    auto_select: false
+                });
+
+                google.accounts.id.renderButton(
+                    document.getElementById('google-signin-container'),
+                    { 
+                        theme: "outline", 
+                        size: "large", 
+                        width: "100%",
+                        text: "continue_with",
+                        shape: "rectangular"
+                    }
+                );
+
+                googleInitialized = true;
+
+            } catch (error) {
+                console.error('Error initializing Google Sign-In:', error);
+                setupFallbackGoogleButton();
+            }
+        }
+
+        // Fallback Google button
+        function setupFallbackGoogleButton() {
+            googleSigninBtn.innerHTML = '<i class="fab fa-google"></i> Continue with Google';
+            googleSigninBtn.onclick = () => {
+                showToast('Google Sign-In is temporarily unavailable. Please try again later.');
+            };
+            googleSigninBtn.style.opacity = '0.7';
+        }
+
+        // Handle Google Sign-In
+        function handleGoogleSignIn(response) {
+            try {
+                const userInfo = parseJwt(response.credential);
+                
+                if (!userInfo) {
+                    throw new Error('Invalid token response');
+                }
+                
+                currentUser = {
+                    id: userInfo.sub,
+                    name: userInfo.name,
+                    email: userInfo.email,
+                    picture: userInfo.picture,
+                    provider: 'google'
+                };
+
+                updateUserInterface();
+                authModal.style.display = 'none';
+                showToast(`Welcome to Wanderlust Planners, ${userInfo.name}!`);
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+            } catch (error) {
+                console.error('Error handling Google Sign-In:', error);
+                showToast('Error signing in. Please try again.', 'error');
+            }
+        }
+
+        function handleGoogleSignInError(error) {
+            console.error('Google Sign-In error:', error);
+            showToast('Error with Google Sign-In. Please try again.', 'error');
+        }
+
+        // Parse JWT token
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+
+                return JSON.parse(jsonPayload);
+            } catch (e) {
+                console.error('Error parsing JWT:', e);
+                return null;
+            }
+        }
+
+        // Update UI based on user authentication state
+        function updateUserInterface() {
+            if (currentUser) {
+                authButtons.style.display = 'none';
+                userMenu.style.display = 'flex';
+                
+                userAvatar.src = currentUser.picture;
+                userDropdownName.textContent = currentUser.name;
+                userDropdownEmail.textContent = currentUser.email;
+            } else {
+                authButtons.style.display = 'flex';
+                userMenu.style.display = 'none';
+            }
+        }
+
+        // Auth modal functionality
+        signinBtn.addEventListener('click', () => {
+            authModal.style.display = 'flex';
+            if (!googleInitialized) {
+                setTimeout(initializeGoogleSignIn, 100);
+            }
+        });
+
+        mobileSignin.addEventListener('click', (e) => {
+            e.preventDefault();
+            mobileMenu.classList.remove('active');
+            authModal.style.display = 'flex';
+            if (!googleInitialized) {
+                setTimeout(initializeGoogleSignIn, 100);
+            }
+        });
+
+        // Close auth modal when clicking outside
+        authModal.addEventListener('click', (e) => {
+            if (e.target === authModal) {
+                authModal.style.display = 'none';
+            }
+        });
+
+        // User dropdown functionality
+        userAvatar.addEventListener('click', () => {
+            userDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!userMenu.contains(e.target)) {
+                userDropdown.classList.remove('active');
+            }
+        });
+
+        // Logout functionality
+        logoutBtn.addEventListener('click', () => {
+            currentUser = null;
+            updateUserInterface();
+            showToast('You have been logged out successfully.');
+            
+            localStorage.removeItem('currentUser');
+            
+            if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+                google.accounts.id.disableAutoSelect();
+                google.accounts.id.revoke(localStorage.getItem('currentUser')?.email, () => {
+                    console.log('Google Sign-Out completed');
+                });
+            }
+        });
+
+        // Show destination details when clicking on a destination card
+        document.querySelectorAll('.destination-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const destinationId = this.getAttribute('data-destination');
+                currentDestinationId = destinationId;
+                showDestinationDetails(destinationId);
+            });
+        });
+
+        // Show destination details in modal
+        function showDestinationDetails(destinationId) {
+            const destination = destinations[destinationId];
+            
+            destinationDetailHeader.style.backgroundImage = `url('${destination.image}')`;
+            destinationDetailTitle.textContent = destination.title;
+            destinationDetailDuration.textContent = destination.duration;
+            destinationDetailTravelers.textContent = destination.travelers;
+            destinationDetailLocation.textContent = destination.location;
+            destinationDetailDescription.textContent = destination.description;
+            
+            // Clear and populate inclusions
+            destinationDetailInclusions.innerHTML = '';
+            destination.inclusions.forEach(inclusion => {
+                const li = document.createElement('li');
+                li.textContent = inclusion;
+                destinationDetailInclusions.appendChild(li);
+            });
+            
+            destinationDetailPrice.textContent = `$${destination.price}`;
+            destinationDetailOriginalPrice.textContent = `$${destination.originalPrice}`;
+            
+            // Reset date inputs
+            travelersCountInput.value = 1;
+            
+            // Show the modal
+            destinationModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Add to bookings from destination modal
+        addToBookingsBtn.addEventListener('click', function() {
+            if (!currentUser) {
+                showToast('Please sign in to add trips to your bookings.');
+                authModal.style.display = 'flex';
+                return;
+            }
+            
+            if (currentDestinationId) {
+                addToBookings(currentDestinationId);
+            }
+        });
+
+        // Add to bookings functionality
+        function addToBookings(destinationId) {
+            const destination = destinations[destinationId];
+            const travelers = parseInt(travelersCountInput.value) || 1;
+            const departureDate = departureDateInput.value;
+            
+            if (!departureDate) {
+                showToast('Please select a departure date.');
+                return;
+            }
+            
+            // Check if destination is already in bookings
+            const existingItem = bookings.find(item => item.id === destinationId && item.departureDate === departureDate);
+            
+            if (existingItem) {
+                existingItem.travelers += travelers;
+            } else {
+                bookings.push({
+                    id: destinationId,
+                    title: destination.title,
+                    price: destination.price,
+                    travelers: travelers,
+                    departureDate: departureDate
+                });
+            }
+            
+            updateBookings();
+            showToast(`${destination.title} has been added to your bookings!`);
+            destinationModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Update bookings display
+        function updateBookings() {
+            bookingItems.innerHTML = '';
+            let total = 0;
+            let bookingCount = 0;
+            
+            if (bookings.length === 0) {
+                bookingItems.innerHTML = '<p>Your bookings are empty</p>';
+            } else {
+                bookings.forEach(item => {
+                    const itemTotal = item.price * item.travelers;
+                    total += itemTotal;
+                    bookingCount += 1;
+                    
+                    const bookingItem = document.createElement('div');
+                    bookingItem.className = 'booking-item';
+                    bookingItem.innerHTML = `
+                        <div class="booking-item-info">
+                            <h4>${item.title}</h4>
+                            <p>$${item.price} x ${item.travelers} travelers</p>
+                            <p>Departure: ${item.departureDate}</p>
+                        </div>
+                        <div class="booking-item-price">$${itemTotal.toFixed(2)}</div>
+                        <button class="remove-booking" data-id="${item.id}" data-date="${item.departureDate}">&times;</button>
+                    `;
+                    bookingItems.appendChild(bookingItem);
+                });
+                
+                // Add event listeners to remove buttons
+                document.querySelectorAll('.remove-booking').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const itemId = this.getAttribute('data-id');
+                        const itemDate = this.getAttribute('data-date');
+                        bookings = bookings.filter(item => !(item.id === itemId && item.departureDate === itemDate));
+                        updateBookings();
+                    });
+                });
+            }
+            
+            bookingsTotal.textContent = `$${total.toFixed(2)}`;
+            bookingsCount.textContent = bookingCount;
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            toastMessage.textContent = message;
+            toast.className = 'toast';
+            
+            if (type === 'success') {
+                toast.classList.add('show', 'toast-success');
+            } else if (type === 'error') {
+                toast.classList.add('show', 'toast-error');
+            } else if (type === 'warning') {
+                toast.classList.add('show', 'toast-warning');
+            }
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Bookings modal controls
+        bookingsIcon.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!currentUser) {
+                showToast('Please sign in to view your bookings.');
+                authModal.style.display = 'flex';
+                return;
+            }
+            bookingsModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeBookings.addEventListener('click', function() {
+            bookingsModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        closeDestination.addEventListener('click', function() {
+            destinationModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        window.addEventListener('click', function(e) {
+            if (e.target === bookingsModal) {
+                bookingsModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+            if (e.target === destinationModal) {
+                destinationModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // WhatsApp checkout
+        whatsappCheckout.addEventListener('click', function() {
+            if (!currentUser) {
+                showToast('Please sign in to complete your booking.');
+                authModal.style.display = 'flex';
+                return;
+            }
+            
+            if (bookings.length === 0) {
+                showToast('Your bookings are empty. Please add trips before checking out.');
+                return;
+            }
+            
+            // Format booking items for message
+            let bookingSummary = 'Booking Summary:%0A';
+            let total = 0;
+            
+            bookings.forEach(item => {
+                const itemTotal = item.price * item.travelers;
+                total += itemTotal;
+                bookingSummary += `- ${item.title} (Travelers: ${item.travelers}, Departure: ${item.departureDate}) - $${itemTotal.toFixed(2)}%0A`;
+            });
+            
+            bookingSummary += `%0ATotal: $${total.toFixed(2)}`;
+            
+            // Create WhatsApp message with user info
+            const message = `Hello! I would like to book the following trips with Wanderlust Planners:%0A%0A${bookingSummary}%0A%0ATraveler Details:%0AName: ${currentUser.name}%0AEmail: ${currentUser.email}`;
+            
+            // Open WhatsApp with pre-filled message
+            window.open(`https://wa.me/254784599322?text=${message}`, '_blank');
+            
+            // Reset bookings and close modal
+            bookings = [];
+            updateBookings();
+            bookingsModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            showToast('Booking completed successfully! Check WhatsApp to finalize your trip.');
+        });
+
+        // Search functionality with autocomplete
+        function setupSearchInput(inputElement) {
+            inputElement.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                searchSuggestions.innerHTML = '';
+                
+                if (searchTerm.length > 0) {
+                    const filteredDestinations = allDestinations.filter(destination => 
+                        destination.toLowerCase().includes(searchTerm)
+                    );
+                    
+                    if (filteredDestinations.length > 0) {
+                        searchSuggestions.style.display = 'block';
+                        
+                        filteredDestinations.forEach(destination => {
+                            const suggestion = document.createElement('div');
+                            suggestion.className = 'search-suggestion';
+                            suggestion.textContent = destination;
+                            suggestion.addEventListener('click', function() {
+                                inputElement.value = destination;
+                                searchSuggestions.style.display = 'none';
+                                performSearch(destination);
+                            });
+                            searchSuggestions.appendChild(suggestion);
+                        });
+                    } else {
+                        searchSuggestions.style.display = 'none';
+                    }
+                } else {
+                    searchSuggestions.style.display = 'none';
+                }
+            });
+            
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!inputElement.contains(e.target) && !searchSuggestions.contains(e.target)) {
+                    searchSuggestions.style.display = 'none';
+                }
+            });
+        }
+
+        // Set up both search inputs
+        setupSearchInput(searchInput);
+        setupSearchInput(heroSearchInput);
+
+        // Perform search
+        function performSearch(searchTerm) {
+            if (searchTerm.trim() !== '') {
+                showToast(`Searching for: "${searchTerm}"`);
+                
+                // For demo purposes, if the search matches a destination, open its details
+                const destinationId = Object.keys(destinations).find(id => 
+                    destinations[id].title.toLowerCase() === searchTerm.toLowerCase()
+                );
+                
+                if (destinationId) {
+                    showDestinationDetails(destinationId);
+                }
+            } else {
+                showToast('Please enter a search term.');
+            }
+        }
+
+        // Search button click
+        searchButton.addEventListener('click', function() {
+            performSearch(searchInput.value);
+        });
+
+        // Enter key in search inputs
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch(this.value);
+            }
+        });
+
+        heroSearchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch(this.value);
+            }
+        });
+
+        // Mobile menu functionality
+        menuToggle.addEventListener('click', function() {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeMenu.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+            if (link.id !== 'mobile-signin') {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+        });
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded, initializing travel application...');
+            
+            // Check if user is already logged in
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                try {
+                    currentUser = JSON.parse(savedUser);
+                } catch (e) {
+                    console.error('Error parsing saved user:', e);
+                    localStorage.removeItem('currentUser');
+                }
+            }
+            
+            updateUserInterface();
+            
+            // Initialize Google Sign-In
+            setTimeout(initializeGoogleSignIn, 1000);
+            
+            // Initialize bookings
+            updateBookings();
+            
+            // Initialize Travel Payment System
+            initializeTravelPayment();
+
+            // Listen for online/offline events
+            window.addEventListener('online', function() {
+                checkPendingBookings();
+            });
+
+            window.addEventListener('offline', function() {
+                console.log('App is offline');
+            });
+        });
+
+        // Additional initialization when window loads completely
+        window.addEventListener('load', () => {
+            if (!googleInitialized) {
+                initializeGoogleSignIn();
+            }
+        });
+    </script>
+</body>
+</html>

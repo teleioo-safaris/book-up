@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.0, user-scalable=no">
-    <title>Wanderlust Planners - Your Dream Vacation Awaits</title>
+    <title>BookUp Trips - Your Dream Vacation Awaits</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Identity Services -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -16,18 +16,20 @@
         }
 
         :root {
-            --primary: #1E88E5;
-            --secondary: #43A047;
-            --accent: #FF9800;
+            --primary: #0d47a1;
+            --secondary: #1976d2;
+            --accent: #ff9800;
             --highlight: #FFD700;
-            --dark: #1a237e;
+            --dark: #001f3f;
             --light: #f5f7fa;
             --gray: #666;
             --success: #2E7D32;
             --white: #ffffff;
             --error: #dc3545;
             --warning: #ffc107;
-            --ocean-blue: #0d47a1;
+            --navy-blue: #001f3f;
+            --navy-light: #0d47a1;
+            --navy-dark: #000814;
             --sand: #FFE0B2;
         }
 
@@ -43,12 +45,12 @@
         }
 
         .travel-payment-option:hover {
-            border-color: var(--primary);
+            border-color: var(--navy-blue);
             background: white;
         }
 
         .travel-payment-option.active {
-            border-color: var(--primary);
+            border-color: var(--navy-blue);
             background: #e8f5e8;
         }
 
@@ -57,7 +59,7 @@
             align-items: center;
             gap: 10px;
             font-weight: 600;
-            color: var(--primary);
+            color: var(--navy-blue);
             margin-bottom: 0.5rem;
         }
 
@@ -80,7 +82,7 @@
         }
 
         .travel-features i {
-            color: var(--primary);
+            color: var(--navy-blue);
             font-size: 0.8rem;
         }
 
@@ -121,7 +123,7 @@
         }
 
         .travel-header {
-            background: linear-gradient(135deg, var(--ocean-blue) 0%, var(--primary) 100%);
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-blue) 100%);
             color: white;
             padding: 2rem;
             text-align: center;
@@ -150,7 +152,7 @@
             padding: 1rem;
             border-radius: 8px;
             margin-bottom: 1.5rem;
-            border-left: 4px solid var(--ocean-blue);
+            border-left: 4px solid var(--navy-blue);
         }
 
         .travel-amount-input {
@@ -186,7 +188,7 @@
         }
 
         .travel-method-card.active {
-            border-color: var(--ocean-blue);
+            border-color: var(--navy-blue);
             background: #f8f9fa;
         }
 
@@ -199,16 +201,16 @@
 
         .travel-method-icon {
             font-size: 1.2rem;
-            color: var(--ocean-blue);
+            color: var(--navy-blue);
         }
 
         .travel-method-name {
             font-weight: 600;
-            color: var(--ocean-blue);
+            color: var(--navy-blue);
         }
 
         .travel-details-card {
-            background: var(--ocean-blue);
+            background: var(--navy-blue);
             color: white;
             padding: 1rem;
             border-radius: 6px;
@@ -296,11 +298,11 @@
         }
 
         .travel-step-indicator.active .travel-step-number {
-            background: var(--ocean-blue);
+            background: var(--navy-blue);
         }
 
         .travel-step-indicator.completed .travel-step-number {
-            background: var(--primary);
+            background: var(--navy-light);
         }
 
         .travel-step-label {
@@ -311,7 +313,7 @@
         }
 
         .travel-step-indicator.active .travel-step-label {
-            color: var(--ocean-blue);
+            color: var(--navy-blue);
         }
 
         .travel-buttons {
@@ -335,12 +337,12 @@
         }
 
         .travel-btn-primary {
-            background: var(--ocean-blue);
+            background: var(--navy-blue);
             color: white;
         }
 
         .travel-btn-primary:hover {
-            background: var(--primary);
+            background: var(--navy-light);
         }
 
         .travel-btn-secondary {
@@ -365,7 +367,7 @@
 
         .travel-spinner {
             border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--ocean-blue);
+            border-top: 3px solid var(--navy-blue);
             border-radius: 50%;
             width: 30px;
             height: 30px;
@@ -410,7 +412,7 @@
         }
 
         .travel-receipt h4 {
-            color: var(--ocean-blue);
+            color: var(--navy-blue);
             margin-bottom: 1rem;
             text-align: center;
         }
@@ -452,7 +454,7 @@
             width: 20px;
             height: 20px;
             border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--primary);
+            border-top: 3px solid var(--navy-blue);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -516,7 +518,7 @@
         }
 
         .auth-footer a {
-            color: var(--primary);
+            color: var(--navy-blue);
             text-decoration: none;
         }
 
@@ -533,7 +535,7 @@
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--primary);
+            border: 2px solid var(--navy-blue);
             cursor: pointer;
             transition: transform 0.2s ease;
         }
@@ -602,7 +604,7 @@
         }
 
         header {
-            background-color: var(--white);
+            background-color: var(--navy-blue);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
@@ -624,13 +626,14 @@
             gap: 10px;
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--white);
             text-decoration: none;
         }
 
         .logo-img {
             height: 40px;
             width: auto;
+            color: var(--white);
         }
 
         .nav-links {
@@ -640,7 +643,7 @@
         }
 
         .nav-links a {
-            color: var(--dark);
+            color: var(--white);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s ease;
@@ -648,11 +651,11 @@
         }
 
         .nav-links a:hover {
-            color: var(--primary);
+            color: var(--accent);
         }
 
         .nav-links a.active {
-            color: var(--primary);
+            color: var(--accent);
             font-weight: 600;
         }
 
@@ -663,7 +666,7 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: var(--primary);
+            background: var(--accent);
         }
 
         .search-bar {
@@ -679,13 +682,14 @@
             border: 1px solid #ddd;
             border-radius: 30px;
             font-size: 1rem;
+            border: 2px solid var(--navy-light);
         }
 
         .search-bar button {
             position: absolute;
             right: 5px;
             top: 5px;
-            background: var(--primary);
+            background: var(--navy-blue);
             color: white;
             border: none;
             border-radius: 30px;
@@ -695,7 +699,7 @@
         }
 
         .search-bar button:hover {
-            background: var(--secondary);
+            background: var(--navy-light);
         }
 
         .search-suggestions {
@@ -735,7 +739,7 @@
         }
 
         .header-actions a {
-            color: var(--dark);
+            color: var(--white);
             text-decoration: none;
             font-weight: 500;
         }
@@ -774,23 +778,23 @@
         }
 
         .btn-outline {
-            border: 1px solid var(--dark);
+            border: 1px solid var(--white);
             background: transparent;
-            color: var(--dark);
+            color: var(--white);
         }
 
         .btn-outline:hover {
-            background: var(--light);
+            background: rgba(255,255,255,0.1);
         }
 
         .btn-primary {
-            background: var(--primary);
+            background: var(--navy-blue);
             color: white;
             border: none;
         }
 
         .btn-primary:hover {
-            background: var(--secondary);
+            background: var(--navy-light);
         }
 
         .menu-toggle {
@@ -799,7 +803,7 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            color: var(--primary);
+            color: var(--white);
         }
 
         /* Mobile Menu */
@@ -810,7 +814,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: white;
+            background: var(--navy-blue);
             z-index: 1000;
             padding: 2rem;
             flex-direction: column;
@@ -836,16 +840,16 @@
         }
 
         .mobile-nav-links a {
-            color: var(--dark);
+            color: var(--white);
             text-decoration: none;
             font-size: 1.2rem;
             font-weight: 500;
             padding: 0.5rem 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .mobile-nav-links a.active {
-            color: var(--primary);
+            color: var(--accent);
             font-weight: 600;
         }
 
@@ -854,12 +858,12 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            color: var(--dark);
+            color: var(--white);
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0, 0, 50, 0.7), rgba(0, 0, 50, 0.7)), url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background: linear-gradient(rgba(0, 31, 63, 0.8), rgba(0, 31, 63, 0.8)), url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-position: center;
             color: white;
@@ -896,6 +900,7 @@
             border-radius: 30px;
             font-size: 1rem;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: 2px solid var(--navy-light);
         }
 
         /* Trip Types */
@@ -909,7 +914,7 @@
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
             font-weight: 700;
-            color: var(--dark);
+            color: var(--navy-blue);
             position: relative;
             display: inline-block;
         }
@@ -921,7 +926,7 @@
             left: 0;
             width: 60px;
             height: 4px;
-            background: var(--highlight);
+            background: var(--accent);
             border-radius: 2px;
         }
 
@@ -932,23 +937,25 @@
         }
 
         .trip-type-card {
-            background: var(--light);
+            background: white;
             border-radius: 8px;
             padding: 1.5rem;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            border: 2px solid #e9ecef;
         }
 
         .trip-type-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--navy-blue);
         }
 
         .trip-type-icon {
             font-size: 2rem;
             margin-bottom: 1rem;
-            color: var(--primary);
+            color: var(--navy-blue);
         }
 
         /* Featured Destinations */
@@ -975,10 +982,12 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             cursor: pointer;
+            border: 2px solid #e9ecef;
         }
 
         .destination-card:hover {
             transform: translateY(-5px);
+            border-color: var(--navy-blue);
         }
 
         .destination-image {
@@ -1008,7 +1017,7 @@
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
             font-weight: 700;
-            color: var(--dark);
+            color: var(--navy-blue);
         }
 
         .destination-duration {
@@ -1045,7 +1054,7 @@
         .current-price {
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--primary);
+            color: var(--navy-blue);
         }
 
         .original-price {
@@ -1062,115 +1071,178 @@
             font-weight: 600;
         }
 
-        /* Destination Detail Modal */
-        .destination-modal {
-            display: none;
+        /* Destination Detail Page (Updated from modal) */
+        .destination-page {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: white;
             z-index: 1000;
-            justify-content: center;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .destination-page.active {
+            display: block;
+        }
+
+        .destination-page-header {
+            background: var(--navy-blue);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .destination-page-back {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .destination-page-content {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 2rem;
         }
 
-        .destination-detail {
-            background: white;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 900px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .close-destination {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--gray);
-            z-index: 10;
-            background: white;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .destination-detail-header {
-            height: 300px;
+        .destination-page-hero {
+            height: 400px;
             background-size: cover;
             background-position: center;
+            border-radius: 12px;
+            margin-bottom: 2rem;
             position: relative;
-            border-radius: 8px 8px 0 0;
         }
 
-        .destination-detail-content {
+        .destination-page-info {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .destination-page-main {
+            background: white;
             padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .destination-detail-title {
-            font-size: 1.8rem;
+        .destination-page-sidebar {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .destination-page-title {
+            font-size: 2rem;
+            color: var(--navy-blue);
             margin-bottom: 1rem;
-            color: var(--dark);
         }
 
-        .destination-detail-meta {
+        .destination-page-meta {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
 
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--gray);
-        }
-
-        .destination-detail-description {
-            margin-bottom: 2rem;
+        .destination-page-description {
             line-height: 1.7;
-        }
-
-        .destination-detail-inclusions {
             margin-bottom: 2rem;
         }
 
-        .destination-detail-inclusions h3 {
-            margin-bottom: 1rem;
-            color: var(--dark);
+        .destination-page-inclusions {
+            margin-bottom: 2rem;
         }
 
-        .destination-detail-inclusions ul {
+        .destination-page-inclusions h3 {
+            color: var(--navy-blue);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .destination-page-inclusions ul {
             padding-left: 1.5rem;
         }
 
-        .destination-detail-inclusions li {
+        .destination-page-inclusions li {
             margin-bottom: 0.5rem;
         }
 
-        .destination-detail-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
+        .destination-page-booking {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
         }
 
-        .destination-detail-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
+        .destination-page-booking h3 {
+            color: var(--navy-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .booking-form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .booking-form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--navy-blue);
+        }
+
+        .booking-form-group input,
+        .booking-form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .booking-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .destination-page-price {
+            background: var(--navy-blue);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .destination-page-price .current-price {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .booking-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .booking-actions .btn {
+            flex: 1;
         }
 
         /* Why Choose Us */
@@ -1194,22 +1266,24 @@
             background: white;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             transition: transform 0.3s ease;
+            border: 2px solid #e9ecef;
         }
 
         .feature:hover {
             transform: translateY(-5px);
+            border-color: var(--navy-blue);
         }
 
         .feature-icon {
             font-size: 2.5rem;
-            color: var(--primary);
+            color: var(--navy-blue);
             margin-bottom: 1rem;
         }
 
         .feature h3 {
             margin-bottom: 1rem;
             font-size: 1.3rem;
-            color: var(--dark);
+            color: var(--navy-blue);
         }
 
         /* Video Feature */
@@ -1221,6 +1295,7 @@
             background: white;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             margin-bottom: 2rem;
+            border: 2px solid #e9ecef;
         }
 
         .video-container {
@@ -1295,7 +1370,7 @@
 
         .booking-item-price {
             font-weight: 600;
-            color: var(--primary);
+            color: var(--navy-blue);
         }
 
         .remove-booking {
@@ -1348,7 +1423,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: var(--primary);
+            background: var(--navy-blue);
             color: white;
             padding: 12px 20px;
             border-radius: 5px;
@@ -1368,7 +1443,7 @@
         }
 
         .toast-success {
-            background: var(--primary);
+            background: var(--navy-blue);
         }
 
         .toast-error {
@@ -1382,7 +1457,7 @@
 
         /* Footer */
         footer {
-            background: var(--dark);
+            background: var(--navy-blue);
             color: white;
             padding: 3rem 2rem 1rem;
         }
@@ -1399,7 +1474,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: var(--primary);
+            color: var(--accent);
         }
 
         .footer-links h4 {
@@ -1423,7 +1498,7 @@
         }
 
         .footer-links a:hover {
-            color: var(--highlight);
+            color: var(--accent);
             text-decoration: underline;
         }
 
@@ -1431,59 +1506,8 @@
             text-align: center;
             margin-top: 3rem;
             padding-top: 1rem;
-            border-top: 1px solid #444;
+            border-top: 1px solid rgba(255,255,255,0.1);
             color: #aaa;
-        }
-
-        /* Date Selection */
-        .date-selection {
-            margin: 1rem 0;
-        }
-
-        .date-inputs {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .date-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .date-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .date-group input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-        }
-
-        .travelers-input {
-            margin: 1rem 0;
-        }
-
-        .travelers-input label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .travelers-input input {
-            width: 100%;
-            max-width: 100px;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
         }
 
         /* Mobile Styles */
@@ -1532,13 +1556,16 @@
                 padding: 2rem 1rem;
             }
 
-            .destination-detail-actions {
-                flex-direction: column;
-                align-items: stretch;
+            .destination-page-info {
+                grid-template-columns: 1fr;
             }
 
-            .destination-detail-actions .btn {
-                width: 100%;
+            .booking-form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-actions {
+                flex-direction: column;
             }
 
             .user-avatar {
@@ -1576,7 +1603,7 @@
         <div class="header-container">
             <a href="#" class="logo">
                 <i class="fas fa-compass logo-img"></i>
-                <span>Wanderlust Planners</span>
+                <span>BookUp Trips</span>
             </a>
             
             <nav class="nav-links">
@@ -1632,7 +1659,7 @@
         <div class="mobile-menu-header">
             <a href="#" class="logo">
                 <i class="fas fa-compass logo-img"></i>
-                <span>Wanderlust Planners</span>
+                <span>BookUp Trips</span>
             </a>
             <button class="close-menu" id="close-menu">
                 <i class="fas fa-times"></i>
@@ -1651,7 +1678,7 @@
     <!-- Auth Modal -->
     <div class="auth-modal" id="auth-modal">
         <div class="auth-content">
-            <h2 style="margin-bottom: 1.5rem;">Welcome to Wanderlust Planners</h2>
+            <h2 style="margin-bottom: 1.5rem;">Welcome to BookUp Trips</h2>
             
             <div id="google-signin-container">
                 <div class="google-signin-btn" id="google-signin-btn">
@@ -1693,7 +1720,7 @@
                 <!-- Step 1: Amount -->
                 <div class="travel-step active" id="travel-amount-step">
                     <div class="travel-business-info">
-                        <h4>Wanderlust Planners</h4>
+                        <h4>BookUp Trips</h4>
                         <p>Complete your trip booking</p>
                     </div>
                     <div class="travel-amount-input">
@@ -1710,7 +1737,7 @@
                 <!-- Step 2: Payment Method -->
                 <div class="travel-step" id="travel-payment-step">
                     <div class="travel-business-info">
-                        <h4>Wanderlust Planners</h4>
+                        <h4>BookUp Trips</h4>
                         <p>Choose your payment method</p>
                     </div>
                     <div class="travel-payment-methods" id="travel-methods-container">
@@ -1734,7 +1761,7 @@
                     <div class="travel-summary">
                         <div class="travel-summary-item">
                             <span>Agency:</span>
-                            <span id="travel-summary-business">Wanderlust Planners</span>
+                            <span id="travel-summary-business">BookUp Trips</span>
                         </div>
                         <div class="travel-summary-item">
                             <span>Amount:</span>
@@ -2029,7 +2056,7 @@
 
     <!-- Why Choose Us -->
     <section class="why-choose">
-        <h2 class="section-title">Why Choose Wanderlust Planners?</h2>
+        <h2 class="section-title">Why Choose BookUp Trips?</h2>
         <div class="features-grid">
             <div class="video-feature">
                 <div class="video-container">
@@ -2037,7 +2064,7 @@
                             allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </div>
                 <h3 style="margin-top: 1.5rem;">See Why Travelers Love Us</h3>
-                <p>Watch this video to hear from our happy travelers and see how Wanderlust Planners has transformed their vacation experiences.</p>
+                <p>Watch this video to hear from our happy travelers and see how BookUp Trips has transformed their vacation experiences.</p>
             </div>
             <div class="feature">
                 <div class="feature-icon">
@@ -2074,7 +2101,7 @@
     <footer>
         <div class="footer-container">
             <div class="footer-col">
-                <div class="footer-logo">Wanderlust Planners</div>
+                <div class="footer-logo">BookUp Trips</div>
                 <p>Creating unforgettable travel experiences since 2010. Your dream vacation is our passion.</p>
             </div>
             <div class="footer-links">
@@ -2106,81 +2133,98 @@
             </div>
         </div>
         <div class="copyright">
-            <p>&copy; 2025 Wanderlust Planners. All rights reserved.</p>
+            <p>&copy; 2025 BookUp Trips. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Destination Detail Modal -->
-    <div class="destination-modal" id="destination-modal">
-        <div class="destination-detail">
-            <span class="close-destination" id="close-destination">&times;</span>
-            <div class="destination-detail-header" id="destination-detail-header">
+    <!-- Destination Detail Page (Updated from modal) -->
+    <div class="destination-page" id="destination-page">
+        <div class="destination-page-header">
+            <button class="destination-page-back" id="destination-page-back">
+                <i class="fas fa-arrow-left"></i> Back to Destinations
+            </button>
+            <h2 style="font-size: 1.2rem; color: white;">Destination Details</h2>
+        </div>
+        
+        <div class="destination-page-content">
+            <div class="destination-page-hero" id="destination-page-hero">
                 <!-- Destination image will be set via JS -->
             </div>
-            <div class="destination-detail-content">
-                <h2 class="destination-detail-title" id="destination-detail-title">Destination Title</h2>
-                <div class="destination-detail-meta">
-                    <div class="meta-item">
-                        <i class="far fa-clock"></i>
-                        <span id="destination-detail-duration">Duration</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-star"></i>
-                        <span id="destination-detail-rating">Rating</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-users"></i>
-                        <span id="destination-detail-travelers">Travelers</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span id="destination-detail-location">Location</span>
-                    </div>
-                </div>
-                <div class="destination-detail-description" id="destination-detail-description">
-                    <!-- Destination description will be set via JS -->
-                </div>
-                <div class="date-selection">
-                    <div class="date-inputs">
-                        <div class="date-group">
-                            <label for="departure-date">Departure Date</label>
-                            <input type="date" id="departure-date" min="">
+            
+            <div class="destination-page-info">
+                <div class="destination-page-main">
+                    <h1 class="destination-page-title" id="destination-page-title">Destination Title</h1>
+                    
+                    <div class="destination-page-meta">
+                        <div class="meta-item">
+                            <i class="far fa-clock"></i>
+                            <span id="destination-page-duration">Duration</span>
                         </div>
-                        <div class="date-group">
-                            <label for="return-date">Return Date</label>
-                            <input type="date" id="return-date">
+                        <div class="meta-item">
+                            <i class="fas fa-star"></i>
+                            <span id="destination-page-rating">Rating</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-users"></i>
+                            <span id="destination-page-travelers">Travelers</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="destination-page-location">Location</span>
                         </div>
                     </div>
-                    <div class="travelers-input">
-                        <label for="travelers-count">Number of Travelers</label>
-                        <input type="number" id="travelers-count" min="1" max="10" value="1">
+                    
+                    <div class="destination-page-description" id="destination-page-description">
+                        <!-- Destination description will be set via JS -->
+                    </div>
+                    
+                    <div class="destination-page-inclusions">
+                        <h3>What's Included</h3>
+                        <ul id="destination-page-inclusions">
+                            <!-- Destination inclusions will be set via JS -->
+                        </ul>
                     </div>
                 </div>
-                <div class="destination-detail-inclusions">
-                    <h3>What's Included</h3>
-                    <ul id="destination-detail-inclusions">
-                        <!-- Destination inclusions will be set via JS -->
-                    </ul>
-                </div>
-                <div class="destination-detail-actions">
-                    <div>
-                        <span class="destination-detail-price" id="destination-detail-price">$0.00</span>
-                        <span class="original-price" id="destination-detail-original-price">$0.00</span>
-                    </div>
-                    <button class="btn btn-primary" id="add-to-bookings-btn">Add to My Bookings</button>
-                    <!-- Travel Payment Option -->
-                    <div class="travel-payment-option" id="travel-payment-option">
-                        <div class="travel-logo">
-                            <i class="fas fa-plane"></i>
-                            <span>Book Now & Pay</span>
+                
+                <div class="destination-page-sidebar">
+                    <div class="destination-page-booking">
+                        <h3>Book This Trip</h3>
+                        
+                        <div class="booking-form-group">
+                            <label for="page-departure-date">Departure Date</label>
+                            <input type="date" id="page-departure-date" min="">
                         </div>
-                        <div class="travel-features">
-                            <ul>
-                                <li><i class="fas fa-check"></i> Secure payment processing</li>
-                                <li><i class="fas fa-check"></i> Instant booking confirmation</li>
-                                <li><i class="fas fa-check"></i> Flexible payment options</li>
-                                <li><i class="fas fa-check"></i> 24/7 customer support</li>
-                            </ul>
+                        
+                        <div class="booking-form-group">
+                            <label for="page-travelers-count">Number of Travelers</label>
+                            <input type="number" id="page-travelers-count" min="1" max="10" value="1">
+                        </div>
+                        
+                        <div class="destination-page-price">
+                            <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">Total Price</div>
+                            <div class="current-price" id="destination-page-price">$0.00</div>
+                            <div style="text-decoration: line-through; opacity: 0.7; font-size: 0.9rem;" id="destination-page-original-price">$0.00</div>
+                        </div>
+                        
+                        <div class="booking-actions">
+                            <button class="btn btn-primary" id="page-add-to-bookings-btn">Add to Bookings</button>
+                            <button class="btn btn-outline" id="page-book-now-btn">Book Now</button>
+                        </div>
+                        
+                        <!-- Travel Payment Option -->
+                        <div class="travel-payment-option" id="page-travel-payment-option" style="margin-top: 1.5rem;">
+                            <div class="travel-logo">
+                                <i class="fas fa-plane"></i>
+                                <span>Book Now & Pay</span>
+                            </div>
+                            <div class="travel-features">
+                                <ul>
+                                    <li><i class="fas fa-check"></i> Secure payment processing</li>
+                                    <li><i class="fas fa-check"></i> Instant booking confirmation</li>
+                                    <li><i class="fas fa-check"></i> Flexible payment options</li>
+                                    <li><i class="fas fa-check"></i> 24/7 customer support</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2233,8 +2277,8 @@
         // Travel Payment Configuration
         const TRAVEL_CONFIG = {
             business: {
-                name: "Wanderlust Planners",
-                email: "bookings@wanderlustplanners.com",
+                name: "BookUp Trips",
+                email: "bookings@bookuptrips.com",
                 sheetName: "Travel Bookings",
                 paymentMethods: [
                     {
@@ -2309,6 +2353,7 @@
         // Travel Payment Options
         const travelPaymentOption = document.getElementById('travel-payment-option');
         const travelBookingsOption = document.getElementById('travel-bookings-option');
+        const pageTravelPaymentOption = document.getElementById('page-travel-payment-option');
 
         // Destination data with detailed information
         const destinations = {
@@ -2320,7 +2365,7 @@
                 travelers: '2,500+ travelers',
                 location: 'Kenya',
                 image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                description: 'Experience the magic of the African savannah with our premium Maasai Mara safari package. Witness the Great Migration, spot the Big Five, and immerse yourself in Maasai culture.',
+                description: 'Experience the magic of the African savannah with our premium Maasai Mara safari package. Witness the Great Migration, spot the Big Five, and immerse yourself in Maasai culture. Our expert guides will ensure you have an unforgettable wildlife experience.',
                 inclusions: [
                     'Luxury tented accommodation',
                     'Daily game drives with expert guides',
@@ -2328,7 +2373,9 @@
                     'Cultural visit to Maasai village',
                     'Airport transfers',
                     'Park entry fees',
-                    '24/7 safari support'
+                    '24/7 safari support',
+                    'Photography sessions',
+                    'Bush breakfast experience'
                 ]
             },
             'diani-beach': {
@@ -2339,7 +2386,7 @@
                 travelers: '3,200+ travelers',
                 location: 'Kenyan Coast',
                 image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                description: 'Relax on pristine white sand beaches and enjoy world-class resort amenities. Perfect for couples, families, and solo travelers seeking sun, sea, and relaxation.',
+                description: 'Relax on pristine white sand beaches and enjoy world-class resort amenities. Perfect for couples, families, and solo travelers seeking sun, sea, and relaxation. Our beachfront resorts offer the perfect blend of luxury and natural beauty.',
                 inclusions: [
                     'Beachfront resort accommodation',
                     'All-inclusive meals and drinks',
@@ -2347,7 +2394,9 @@
                     'Spa treatment voucher',
                     'Snorkeling tour',
                     'Airport transfers',
-                    'Daily entertainment'
+                    'Daily entertainment',
+                    'Sunset dhow cruise',
+                    'Beachside yoga sessions'
                 ]
             },
             'amboseli': {
@@ -2358,7 +2407,7 @@
                 travelers: '1,800+ travelers',
                 location: 'Kenya',
                 image: 'https://images.unsplash.com/photo-1505765050516-f72dcacb0680?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                description: 'Marvel at majestic Mount Kilimanjaro while observing elephants and other wildlife in their natural habitat at Amboseli National Park.',
+                description: 'Marvel at majestic Mount Kilimanjaro while observing elephants and other wildlife in their natural habitat at Amboseli National Park. Experience breathtaking views and close encounters with wildlife.',
                 inclusions: [
                     'Lodge accommodation with mountain views',
                     'Guided game drives',
@@ -2366,7 +2415,9 @@
                     'Elephant observation experience',
                     'Nature walks',
                     'Park fees',
-                    'Transportation'
+                    'Transportation',
+                    'Bird watching sessions',
+                    'Sunset photography tour'
                 ]
             },
             'zanzibar': {
@@ -2377,7 +2428,7 @@
                 travelers: '2,900+ travelers',
                 location: 'Tanzania',
                 image: 'https://images.unsplash.com/photo-1562184552-a3e1ad6c7b65?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                description: 'Discover the spice island of Zanzibar with its rich history, beautiful beaches, and vibrant culture. Perfect for history buffs and beach lovers alike.',
+                description: 'Discover the spice island of Zanzibar with its rich history, beautiful beaches, and vibrant culture. Perfect for history buffs and beach lovers alike. Explore Stone Town, relax on pristine beaches, and immerse yourself in Swahili culture.',
                 inclusions: [
                     'Beach resort accommodation',
                     'Stone Town cultural tour',
@@ -2385,7 +2436,9 @@
                     'All meals',
                     'Snorkeling at Mnemba Atoll',
                     'Domestic flights',
-                    'Historical guide services'
+                    'Historical guide services',
+                    'Traditional dinner show',
+                    'Dolphin watching tour'
                 ]
             },
             'naivasha': {
@@ -2396,7 +2449,7 @@
                 travelers: '1,500+ travelers',
                 location: 'Kenya',
                 image: 'https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                description: 'Perfect family getaway with activities for all ages. Enjoy boat rides, nature walks, and wildlife viewing in a serene lakeside setting.',
+                description: 'Perfect family getaway with activities for all ages. Enjoy boat rides, nature walks, and wildlife viewing in a serene lakeside setting. Create lasting memories with your family in this beautiful natural environment.',
                 inclusions: [
                     'Family cottage accommodation',
                     'Boat ride to Crescent Island',
@@ -2404,7 +2457,9 @@
                     'Guided nature walk',
                     'Children\'s activity program',
                     'Park entry fees',
-                    'Transportation from Nairobi'
+                    'Transportation from Nairobi',
+                    'Bird watching tour',
+                    'Evening bonfire experience'
                 ]
             }
         };
@@ -2442,22 +2497,22 @@
         const bookingsTotal = document.getElementById('bookings-total');
         const whatsappCheckout = document.getElementById('whatsapp-checkout');
 
-        // Destination modal elements
-        const destinationModal = document.getElementById('destination-modal');
-        const closeDestination = document.getElementById('close-destination');
-        const destinationDetailHeader = document.getElementById('destination-detail-header');
-        const destinationDetailTitle = document.getElementById('destination-detail-title');
-        const destinationDetailDuration = document.getElementById('destination-detail-duration');
-        const destinationDetailTravelers = document.getElementById('destination-detail-travelers');
-        const destinationDetailLocation = document.getElementById('destination-detail-location');
-        const destinationDetailDescription = document.getElementById('destination-detail-description');
-        const destinationDetailInclusions = document.getElementById('destination-detail-inclusions');
-        const destinationDetailPrice = document.getElementById('destination-detail-price');
-        const destinationDetailOriginalPrice = document.getElementById('destination-detail-original-price');
-        const addToBookingsBtn = document.getElementById('add-to-bookings-btn');
-        const departureDateInput = document.getElementById('departure-date');
-        const returnDateInput = document.getElementById('return-date');
-        const travelersCountInput = document.getElementById('travelers-count');
+        // Destination page elements
+        const destinationPage = document.getElementById('destination-page');
+        const destinationPageBack = document.getElementById('destination-page-back');
+        const destinationPageHero = document.getElementById('destination-page-hero');
+        const destinationPageTitle = document.getElementById('destination-page-title');
+        const destinationPageDuration = document.getElementById('destination-page-duration');
+        const destinationPageTravelers = document.getElementById('destination-page-travelers');
+        const destinationPageLocation = document.getElementById('destination-page-location');
+        const destinationPageDescription = document.getElementById('destination-page-description');
+        const destinationPageInclusions = document.getElementById('destination-page-inclusions');
+        const destinationPagePrice = document.getElementById('destination-page-price');
+        const destinationPageOriginalPrice = document.getElementById('destination-page-original-price');
+        const pageDepartureDateInput = document.getElementById('page-departure-date');
+        const pageTravelersCountInput = document.getElementById('page-travelers-count');
+        const pageAddToBookingsBtn = document.getElementById('page-add-to-bookings-btn');
+        const pageBookNowBtn = document.getElementById('page-book-now-btn');
 
         // Search elements
         const searchInput = document.getElementById('search-input');
@@ -2493,12 +2548,23 @@
 
         // Set min date for departure to today
         const today = new Date().toISOString().split('T')[0];
-        departureDateInput.min = today;
+        if (pageDepartureDateInput) {
+            pageDepartureDateInput.min = today;
+        }
 
         // Initialize Travel Payment System
         function initializeTravelPayment() {
             // Set up event listeners for travel payment options
             travelPaymentOption.addEventListener('click', function() {
+                if (!currentUser) {
+                    showToast('Please sign in to book trips.');
+                    authModal.style.display = 'flex';
+                    return;
+                }
+                openTravelModal();
+            });
+
+            pageTravelPaymentOption.addEventListener('click', function() {
                 if (!currentUser) {
                     showToast('Please sign in to book trips.');
                     authModal.style.display = 'flex';
@@ -2553,7 +2619,7 @@
             if (bookings.length > 0) {
                 travelCurrentAmount = bookings.reduce((total, item) => total + (item.price * item.travelers), 0);
             } else if (currentDestinationId && destinations[currentDestinationId]) {
-                const travelers = parseInt(travelersCountInput.value) || 1;
+                const travelers = parseInt(pageTravelersCountInput ? pageTravelersCountInput.value : 1) || 1;
                 travelCurrentAmount = destinations[currentDestinationId].price * travelers;
             }
             
@@ -2726,7 +2792,7 @@
             travelLoading.style.display = 'block';
 
             // Generate unique confirmation ID
-            const confirmationId = 'WL-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            const confirmationId = 'BU-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
             
             // Get trip details for receipt
             const tripDetails = getTripDetailsForReceipt();
@@ -2899,7 +2965,7 @@
                     count: bookings.length
                 };
             } else if (currentDestinationId && destinations[currentDestinationId]) {
-                const travelers = parseInt(travelersCountInput.value) || 1;
+                const travelers = parseInt(pageTravelersCountInput ? pageTravelersCountInput.value : 1) || 1;
                 return {
                     names: destinations[currentDestinationId].title,
                     details: [{
@@ -3007,7 +3073,7 @@
 
                 updateUserInterface();
                 authModal.style.display = 'none';
-                showToast(`Welcome to Wanderlust Planners, ${userInfo.name}!`);
+                showToast(`Welcome to BookUp Trips, ${userInfo.name}!`);
                 
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 
@@ -3110,42 +3176,50 @@
             card.addEventListener('click', function() {
                 const destinationId = this.getAttribute('data-destination');
                 currentDestinationId = destinationId;
-                showDestinationDetails(destinationId);
+                showDestinationPage(destinationId);
             });
         });
 
-        // Show destination details in modal
-        function showDestinationDetails(destinationId) {
+        // Show destination details page
+        function showDestinationPage(destinationId) {
             const destination = destinations[destinationId];
             
-            destinationDetailHeader.style.backgroundImage = `url('${destination.image}')`;
-            destinationDetailTitle.textContent = destination.title;
-            destinationDetailDuration.textContent = destination.duration;
-            destinationDetailTravelers.textContent = destination.travelers;
-            destinationDetailLocation.textContent = destination.location;
-            destinationDetailDescription.textContent = destination.description;
+            destinationPageHero.style.backgroundImage = `url('${destination.image}')`;
+            destinationPageTitle.textContent = destination.title;
+            destinationPageDuration.textContent = destination.duration;
+            destinationPageTravelers.textContent = destination.travelers;
+            destinationPageLocation.textContent = destination.location;
+            destinationPageDescription.textContent = destination.description;
+            destinationPagePrice.textContent = `$${destination.price}`;
+            destinationPageOriginalPrice.textContent = `$${destination.originalPrice}`;
             
             // Clear and populate inclusions
-            destinationDetailInclusions.innerHTML = '';
+            destinationPageInclusions.innerHTML = '';
             destination.inclusions.forEach(inclusion => {
                 const li = document.createElement('li');
                 li.textContent = inclusion;
-                destinationDetailInclusions.appendChild(li);
+                destinationPageInclusions.appendChild(li);
             });
             
-            destinationDetailPrice.textContent = `$${destination.price}`;
-            destinationDetailOriginalPrice.textContent = `$${destination.originalPrice}`;
+            // Reset form inputs
+            pageTravelersCountInput.value = 1;
+            if (pageDepartureDateInput) {
+                pageDepartureDateInput.value = '';
+            }
             
-            // Reset date inputs
-            travelersCountInput.value = 1;
-            
-            // Show the modal
-            destinationModal.style.display = 'flex';
+            // Show the page
+            destinationPage.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
-        // Add to bookings from destination modal
-        addToBookingsBtn.addEventListener('click', function() {
+        // Back button for destination page
+        destinationPageBack.addEventListener('click', function() {
+            destinationPage.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Add to bookings from destination page
+        pageAddToBookingsBtn.addEventListener('click', function() {
             if (!currentUser) {
                 showToast('Please sign in to add trips to your bookings.');
                 authModal.style.display = 'flex';
@@ -3157,11 +3231,42 @@
             }
         });
 
+        // Book now button
+        pageBookNowBtn.addEventListener('click', function() {
+            if (!currentUser) {
+                showToast('Please sign in to book trips.');
+                authModal.style.display = 'flex';
+                return;
+            }
+            
+            if (currentDestinationId) {
+                const travelers = parseInt(pageTravelersCountInput.value) || 1;
+                const departureDate = pageDepartureDateInput.value;
+                
+                if (!departureDate) {
+                    showToast('Please select a departure date.');
+                    return;
+                }
+                
+                // Clear existing bookings and add this one
+                bookings = [{
+                    id: currentDestinationId,
+                    title: destinations[currentDestinationId].title,
+                    price: destinations[currentDestinationId].price,
+                    travelers: travelers,
+                    departureDate: departureDate
+                }];
+                
+                updateBookings();
+                openTravelModal();
+            }
+        });
+
         // Add to bookings functionality
         function addToBookings(destinationId) {
             const destination = destinations[destinationId];
-            const travelers = parseInt(travelersCountInput.value) || 1;
-            const departureDate = departureDateInput.value;
+            const travelers = parseInt(pageTravelersCountInput.value) || 1;
+            const departureDate = pageDepartureDateInput.value;
             
             if (!departureDate) {
                 showToast('Please select a departure date.');
@@ -3185,8 +3290,10 @@
             
             updateBookings();
             showToast(`${destination.title} has been added to your bookings!`);
-            destinationModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
+            
+            // Optional: Close the destination page after adding to bookings
+            // destinationPage.classList.remove('active');
+            // document.body.style.overflow = 'auto';
         }
 
         // Update bookings display
@@ -3267,18 +3374,9 @@
             document.body.style.overflow = 'auto';
         });
 
-        closeDestination.addEventListener('click', function() {
-            destinationModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-
         window.addEventListener('click', function(e) {
             if (e.target === bookingsModal) {
                 bookingsModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-            if (e.target === destinationModal) {
-                destinationModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
             }
         });
@@ -3309,7 +3407,7 @@
             bookingSummary += `%0ATotal: $${total.toFixed(2)}`;
             
             // Create WhatsApp message with user info
-            const message = `Hello! I would like to book the following trips with Wanderlust Planners:%0A%0A${bookingSummary}%0A%0ATraveler Details:%0AName: ${currentUser.name}%0AEmail: ${currentUser.email}`;
+            const message = `Hello! I would like to book the following trips with BookUp Trips:%0A%0A${bookingSummary}%0A%0ATraveler Details:%0AName: ${currentUser.name}%0AEmail: ${currentUser.email}`;
             
             // Open WhatsApp with pre-filled message
             window.open(`https://wa.me/254784599322?text=${message}`, '_blank');
@@ -3379,7 +3477,7 @@
                 );
                 
                 if (destinationId) {
-                    showDestinationDetails(destinationId);
+                    showDestinationPage(destinationId);
                 }
             } else {
                 showToast('Please enter a search term.');
